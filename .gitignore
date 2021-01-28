@@ -18,3 +18,4 @@ Clone/
 Pytorch/DenseNet_Cifar10/data
 **/venv
 **/data/
+**/*.pkl
