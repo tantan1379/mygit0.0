@@ -39,7 +39,10 @@ git包括三个区域：工作区、暂存区、本地仓库，在远端（remot
 
 ##### 3、回退版本(取消commit)的内容
 
-回退到某一版本(commit)：`git reset HEAD`
+回退到某一版本(commit)：`git reset [--soft | --mixed | --hard] [HEAD]`
+**Notes:**
+1、HEAD后跟^的数量表示回退的版本数，不加时用于取消暂存(add)的文件，直接返回当前的commit版本
+2、--mixed为默认参数，可以省略，有此参数时会重置暂存区的文件与上一次的commit一致，工作区内容保持不变，并删除指定版本到当前所有的commit信息; 使用--hard参数时，会撤销工作区所有未提交的修改内容，并将暂存区和工作区都返回到上一版本，并删除指定版本到当前所有的commit信息。
 
 ##### 4、分支控制
 
@@ -59,11 +62,13 @@ git包括三个区域：工作区、暂存区、本地仓库，在远端（remot
 
 显示服务器端的地址：`git remote -v`
 
-添加服务器：`git add remote [name] ssh-address`
+添加服务器：`git add remote [name] ssh-address` 
+tips:一般设置远端服务器名为origin
 
 ##### 6、其他
 
-精简显示文件状态：`git status -s`  tips:A表示新添加到暂存区的文件，M表示已修改，??表示未跟踪，靠左侧表示暂存区，靠右侧表示工作区
+精简显示文件状态：`git status -s`  
+tips:A表示新添加到暂存区的文件，M表示已修改，??表示未跟踪，靠左侧表示暂存区，靠右侧表示工作区
 
 ### 完全重建版本库
 
