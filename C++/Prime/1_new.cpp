@@ -20,12 +20,12 @@
 //		p[i]= i;
 //	}
 //	for (int i = 0; i < 10; i++) {
-//		cout << *(p + i) << endl;
+//		cout << *(p+i) << endl;
 //	}
 //	delete[] p;
 //}
 //
-//int main1() {
+//int main() {
 //	test02();
 //	system("pause");
 //	return 0;

@@ -68,6 +68,14 @@ pixwise (adj.)像素级的
 
 asymptotically (adv.)渐进地
 
+retinal (adj.)视网膜的
+
+diabetic (adj.)糖尿病的
+
+edema (n.)水肿
+
+angiography （n.)血管造影术
+
 ## 2.Phrase
 concurrent with 与...一起的   
 
