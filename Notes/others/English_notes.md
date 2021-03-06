@@ -68,13 +68,35 @@ pixwise (adj.)像素级的
 
 asymptotically (adv.)渐进地
 
+retain (v.)保持
+
+generalization (n.)泛化性
+
+relatively (adv.)相对地
+
+
+
+#### ophthalmology：
+
 retinal (adj.)视网膜的
 
+retinopathy (n.)视网膜病变
+
 diabetic (adj.)糖尿病的
+
+leision (n.)损伤
 
 edema (n.)水肿
 
 angiography （n.)血管造影术
+
+diabetic  retinopathy(DR) 糖尿病性视网膜病变（白内障） 
+
+cystoid macular edema(CME) 黄斑囊样水肿
+
+macular hole(MH) 黄斑裂孔
+
+serous retinal detachment(SRD) 浆液性视网膜脱离
 
 ## 2.Phrase
 concurrent with 与...一起的   
@@ -90,6 +112,10 @@ by a large margin 很大程度地，大幅度的
 in this light 在这种情况下
 
 be referred to as.. 被称作
+
+To the best of our knowledge 据我们所知
+
+ablation experiment 消融实验
 
 ## 3.Sentence
 There is large consent that... 人们普遍认为
