@@ -90,6 +90,12 @@ edema (n.)水肿
 
 angiography （n.)血管造影术
 
+metabolic (adj.)代谢的
+
+morbidity (n.)发病
+
+
+
 diabetic  retinopathy(DR) 糖尿病性视网膜病变（白内障） 
 
 cystoid macular edema(CME) 黄斑囊样水肿
@@ -97,6 +103,10 @@ cystoid macular edema(CME) 黄斑囊样水肿
 macular hole(MH) 黄斑裂孔
 
 serous retinal detachment(SRD) 浆液性视网膜脱离
+
+ground true 金标准
+
+
 
 ## 2.Phrase
 concurrent with 与...一起的   
@@ -116,6 +126,10 @@ be referred to as.. 被称作
 To the best of our knowledge 据我们所知
 
 ablation experiment 消融实验
+
+in line with 符合于...
+
+
 
 ## 3.Sentence
 There is large consent that... 人们普遍认为
