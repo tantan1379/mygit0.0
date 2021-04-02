@@ -3,14 +3,14 @@ from torchvision import transforms as T
 from config import config
 from PIL import Image
 from itertools import chain
-from glob import glob
+import glob
 from tqdm import tqdm
 from .augmentations import get_train_transform, get_test_transform
 import random
 import numpy as np
 import pandas as pd
 import os
-import cv2
+from cv2 import cv2
 import torch
 
 # 1.set random seed
@@ -27,11 +27,11 @@ class ChaojieDataset(Dataset):
         self.train = train
         imgs = []
         if self.test:
-            for index, row in label_list.iterrows():
+            for _, row in label_list.iterrows():
                 imgs.append((row["filename"]))
             self.imgs = imgs
         else:
-            for index, row in label_list.iterrows():
+            for _, row in label_list.iterrows():
                 imgs.append((row["filename"], row["label"]))
             self.imgs = imgs
 
@@ -40,15 +40,18 @@ class ChaojieDataset(Dataset):
             filename = self.imgs[index]
             img = cv2.imread(filename)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = cv2.resize(img, (int(config.img_height * 1.5), int(config.img_weight * 1.5)))
+            img = cv2.resize(
+                img, (int(config.img_height * 1.5), int(config.img_weight * 1.5)))
             img = get_test_transform(img.shape)(image=img)["image"]
             return img, filename
         else:
             filename, label = self.imgs[index]
             img = cv2.imread(filename)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = cv2.resize(img, (int(config.img_height * 1.5), int(config.img_weight * 1.5)))
-            img = get_train_transform(img.shape, augmentation=config.augmen_level)(image=img)["image"]
+            img = cv2.resize(
+                img, (int(config.img_height * 1.5), int(config.img_weight * 1.5)))
+            img = get_train_transform(
+                img.shape, augmentation=config.augmen_level)(image=img)["image"]
             return img, label
 
     def __len__(self):
@@ -62,8 +65,7 @@ def collate_fn(batch):
         imgs.append(sample[0])
         label.append(sample[1])
 
-    return torch.stack(imgs, 0), \
-           label
+    return torch.stack(imgs, 0), label
 
 
 def get_files(root, mode):
@@ -76,15 +78,15 @@ def get_files(root, mode):
         return files
     elif mode != "test":
         # for train and val
-        all_data_path, labels = [], []
-        image_folders = list(map(lambda x: root + x, os.listdir(root)))
-        all_images = list(chain.from_iterable(list(map(lambda x: glob(x + "/*"), image_folders))))
+        all_images,labels = [], []
+        # image_folders = list(map(lambda x: root + x, os.listdir(root)))
+        for f in os.listdir(root):
+            all_images += glob.glob(os.path.join(root,f, "*.png"))
         print("loading train dataset")
-        for file in tqdm(all_images):
-            file = file.replace('\\','/')
-            all_data_path.append(file)
-            labels.append(int(file.split('/')[-2]))
-        all_files = pd.DataFrame({"filename": all_data_path, "label": labels})
+        # for file in tqdm(all_images):
+        for image in all_images:
+            labels.append(int(image.split(os.sep)[-2]))
+        all_files = pd.DataFrame({"filename": all_images, "label": labels})
         return all_files
     else:
         print("check the mode please!")

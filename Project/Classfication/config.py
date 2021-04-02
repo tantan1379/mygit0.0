@@ -1,13 +1,13 @@
 class DefaultConfigs(object):
     # 1.string parameters
-    train_data = "F:/Dataset/traffic-sign/train/"
+    train_data = "F:\\Dataset\\traffic-sign\\train\\"
     test_data = ""
-    val_data = "F:/Dataset/traffic-sign/test/"
+    val_data = "F:\\Dataset\\traffic-sign\\test\\"
     model_name = "resnet18"
-    weights = "./checkpoints/"
-    best_models = weights + "best_model/"
-    submit = "./submit/"
-    logs = "./logs/"
+    weights = ".\\checkpoints\\"
+    best_models = weights + "best_model\\"
+    submit = ".\\submit\\"
+    logs = ".\\logs\\"
     gpus = "0"
     augmen_level = "medium"  # "light","hard","hard2"
 

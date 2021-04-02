@@ -11,7 +11,6 @@ from datetime import datetime
 from torch import nn, optim
 from config import config
 from collections import OrderedDict
-from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dataset.dataloader import *
 from sklearn.model_selection import train_test_split, StratifiedKFold
@@ -27,52 +26,50 @@ torch.manual_seed(config.seed)
 torch.cuda.manual_seed_all(config.seed)
 os.environ["CUDA_VISIBLE_DEVICES"] = config.gpus  # 指定GPU训练
 torch.backends.cudnn.benchmark = True  # 加快卷积计算速度
-warnings.filterwarnings('ignore')  # 收到的
 
 
 # 2. evaluate func
-def evaluate(val_loader, model, criterion, epoch):
-    # 2.1 define meters
-    losses = AverageMeter()
+def evaluate(val_loader, model, optimizer, criterion, epoch):
+    # 2.1 为损失和准确率创建“标尺”（拥有计数、求和、求平均功能）
+    losses = AverageMeter()  
     top1 = AverageMeter()
-    # progress bar
+    # 2.2 创建进度条
     val_progressor = ProgressBar(mode="Val  ", epoch=epoch, total_epoch=config.epochs, model_name=config.model_name,
                                  total=len(val_loader))
-    # 2.2 switch to evaluate mode and confirm model has been transfered to cuda
+    # 2.3 验证过程
     model.cuda()
     model.eval()
     with torch.no_grad():
         for i, (input, target) in enumerate(val_loader):
             val_progressor.current = i
             input = input.cuda()
-            target = torch.from_numpy(np.array(target)).long().cuda()
-            # target = Variable(target).cuda()
-            # 2.2.1 compute output
-            output = model(input)
-            loss = criterion(output, target)
-            
-            # 2.2.2 measure accuracy and record loss
-            precision1, precision2 = accuracy(output, target, topk=(1, 2))
+            target = torch.from_numpy(np.array(target)).long().cuda()  # 范式
+            output = model(input)  # 将input输入模型得到预测输出
+            loss = criterion(output, target)  # 根据预测和真实标签求损失
+
+            # 2.3.2 计算准确率并实时更新进度条的显示内容
+            precision1, _ = accuracy(output, target, topk=(1, 2))
             losses.update(loss.item(), input.size(0))
             top1.update(precision1[0], input.size(0))
             val_progressor.current_loss = losses.avg
             val_progressor.current_top1 = top1.avg
+            val_progressor.current_lr = get_learning_rate(optimizer)
             val_progressor()
         val_progressor.done()
     return [losses.avg, top1.avg]
 
 
-# 3. test model on public dataset and save the probability matrix
+# 3. 用于提交的测试函数，计算特征图矩阵
 def test(test_loader, model, folds):
     # 3.1 confirm the model converted to cuda
     csv_map = OrderedDict({"filename": [], "probability": []})
     model.cuda()
     model.eval()
-    for i, (input, filepath) in enumerate(tqdm(test_loader)):
+    for _, (input, filepath) in enumerate(tqdm(test_loader)):
         # 3.2 change everything to cuda and get only basename
         filepath = [os.path.basename(x) for x in filepath]
         with torch.no_grad():
-            image_var = Variable(input).cuda()
+            image_var = input.cuda()
             # 3.3.output
             # print(filepath)
             # print(input,input.shape)
@@ -92,10 +89,10 @@ def test(test_loader, model, folds):
                   "_" + str(folds)), index=False, header=None)
 
 
-# 4. more details to build main function
+# 4. 主函数
 def main():
     fold = 0
-    # 4.1 mkdirs
+    # 4.1 创建相应的文件夹
     if not os.path.exists(config.submit):
         os.mkdir(config.submit)
     if not os.path.exists(config.weights):
@@ -110,25 +107,32 @@ def main():
     if not os.path.exists(config.best_models + config.model_name + os.sep + str(fold) + os.sep):
         os.makedirs(config.best_models + config.model_name +
                     os.sep + str(fold) + os.sep)
-        # 4.2 get model and optimizer
-    model = get_net()
-    # model = torch.nn.DataParallel(model)
-    model.cuda()
-
+    # 4.2 输入模型、优化器、损失函数
+    model = get_net().cuda()
     # optimizer = optim.SGD(model.parameters(),lr = config.lr,momentum=0.9,weight_decay=config.weight_decay)
     optimizer = optim.Adam(model.parameters(), lr=config.lr,
                            amsgrad=True, weight_decay=config.weight_decay)
     criterion = nn.CrossEntropyLoss().cuda()
-    # 4.3 some parameters for  K-fold and restart model
+    # 4.3 重启参数
     start_epoch = 0
     best_precision1 = 0
-    best_precision_save = 0
-    resume = False
+    # best_precision_save = 0
+    resume = 0  # 0:从头训练 1：从最近最好的一次开始训练 2：从最近的一次开始训练
 
-    # 4.4 restart the training process
-    if resume:
-        checkpoint = torch.load(config.best_models +
-                                str(fold) + "/model_best.pth.tar")
+    # 4.4 重启程序
+    assert(resume == 0 or resume == 1 or resume == 2), print("error input")
+    if resume == 1:
+        checkpoint = torch.load(
+            config.best_models + config.model_name+os.sep + str(fold) + "/model_best.pth.tar")
+        start_epoch = checkpoint["epoch"]
+        fold = checkpoint["fold"]
+        best_precision1 = checkpoint["best_precision1"]
+        model.load_state_dict(checkpoint["state_dict"])
+        optimizer.load_state_dict(checkpoint["optimizer"])
+
+    elif resume == 2:
+        checkpoint = torch.load(
+            config.weights + config.model_name + os.sep + str(fold) + "/_checkpoint.pth.tar")
         start_epoch = checkpoint["epoch"]
         fold = checkpoint["fold"]
         best_precision1 = checkpoint["best_precision1"]
@@ -165,12 +169,13 @@ def main():
     train_losses = AverageMeter()
     train_top1 = AverageMeter()
     valid_loss = [np.inf, 0, 0]
-    model.train()
 
     # 4.5.5 train
-    start = timer()
+    model.train()
+    # start = timer()
     for epoch in range(start_epoch, config.epochs):
         scheduler.step(epoch)
+
         train_progressor = ProgressBar(mode="Train", epoch=epoch, total_epoch=config.epochs,
                                        model_name=config.model_name, total=len(train_dataloader))
         # train
@@ -179,18 +184,19 @@ def main():
             # 4.5.5 switch to continue train process
             train_progressor.current = iter
             model.train()
-            input = Variable(input).cuda()
-            target = Variable(torch.from_numpy(np.array(target)).long()).cuda()
+            input = input.cuda()
+            target = torch.from_numpy(np.array(target)).long().cuda()
             # target = Variable(target).cuda()
             output = model(input)
             loss = criterion(output, target)
 
-            precision1_train, precision2_train = accuracy(
+            precision1_train, _ = accuracy(
                 output, target, topk=(1, 2))
             train_losses.update(loss.item(), input.size(0))
             train_top1.update(precision1_train[0], input.size(0))
             train_progressor.current_loss = train_losses.avg
             train_progressor.current_top1 = train_top1.avg
+            train_progressor.current_lr = get_learning_rate(optimizer)
             # backward
             optimizer.zero_grad()
             loss.backward()
@@ -198,11 +204,12 @@ def main():
             train_progressor()
         train_progressor.done()
         # evaluate
-        lr = get_learning_rate(optimizer)
+        # lr = get_learning_rate(optimizer)
         # evaluate every half epoch
-        valid_loss = evaluate(val_dataloader, model, criterion, epoch)
-        is_best = valid_loss[1] > best_precision1
-        best_precision1 = max(valid_loss[1], best_precision1)
+        valid_info = evaluate(val_dataloader, model,
+                              optimizer, criterion, epoch)
+        is_best = valid_info[1] > best_precision1
+        best_precision1 = max(valid_info[1], best_precision1)
         try:
             best_precision_save = best_precision1.cpu().data.numpy()
         except:

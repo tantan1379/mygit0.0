@@ -1,8 +1,8 @@
-# English vocabulary
+# Vocabulary
 
-### 1、Professional English
+### 1、Professional
 
-#### ophthalmology：
+#### ophthalmology
 
 retinal (adj.)视网膜的
 
@@ -24,6 +24,16 @@ fovea (n.) 中央凹
 
 macula (n.) 黄斑
 
+neovascular (adj.) 新生血管的
+
+degeneration (n.) 退化
+
+pro-re-nata（PRN） 随机应变的
+
+pathology (n.) 病理学
+
+anatomy (n.) 解剖学
+
 
 
 retinal nerve fibre layer（RNFL） 视网膜神经纤维层
@@ -44,9 +54,23 @@ vascular endothelial growth factor(VEGF) 血管内皮生长因子
 
 
 
+#### computerese
+
+access-specifier 访问修饰符
+
+interpolation 插值
+
+robustness 健壮性
+
+Application program interface(API) 应用程序接口
+
 ---
 
-## 2.Word
+### 2.Word
+
+longitudinal （adj.) 纵向的
+
+suboptimal（adj.) 未达标准的
 
 variance (n.)方差   
 
@@ -126,7 +150,7 @@ indispensable (adj.)不可缺少的
 
 ---
 
-## 3.Match
+### 3.Match
 concurrent with 与...一起的   
 
 akin to 类似于...   
@@ -149,3 +173,16 @@ in line with 符合于...
 
 There is large consent that... 人们普遍认为
 
+ at the same time minimize the ... while ...maximal 最小化..的同时取得最大的...
+
+optimal use of ... 充分利用...
+
+
+
+### 4.Conjunction
+
+nevertheless 然而
+
+Notably 值得注意的是
+
+Specifically 特别地

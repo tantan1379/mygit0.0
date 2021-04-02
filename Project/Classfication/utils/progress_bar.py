@@ -5,7 +5,7 @@ import re
 class ProgressBar(object):
     DEFAULT = "Progress: %(bar)s %(percent)3d%%"
 
-    def __init__(self, mode, epoch=None, total_epoch=None, current_loss=None, current_top1=None, model_name=None, total=None, current=None, width=50, symbol=">", output=sys.stderr):
+    def __init__(self, mode, epoch=None, total_epoch=None, current_loss=None, current_top1=None,current_lr=0, model_name=None, total=None, current=None, width=50, symbol=">", output=sys.stderr):
         assert len(symbol) == 1
 
         self.mode = mode  # 文字显示模式
@@ -19,6 +19,7 @@ class ProgressBar(object):
         self.current_loss = current_loss  # 输入记录的当前loss
         self.current_top1 = current_top1  # 输入记录的当前top1 acc
         self.model_name = model_name  # 网络名
+        self.current_lr = current_lr
 
     def __call__(self):
         percent = self.current / float(self.total)
@@ -34,10 +35,11 @@ class ProgressBar(object):
             "current_loss": self.current_loss,
             "current_top1": self.current_top1,
             "epoch": self.epoch + 1,
-            "epochs": self.total_epoch
+            "epochs": self.total_epoch,
+            "current_lr":self.current_lr
         }
-        message = "\033[1;32;40m%(mode)s Epoch:  %(epoch)d/%(epochs)d %(bar)s\033[0m  [Current: Loss %(current_loss)f Top1: %(current_top1)f ]  %(current)d/%(total)d \033[1;32;40m[ %(percent)3d%% ]\033[0m" % args
-        self.write_message = "%(mode)s Epoch:  %(epoch)d/%(epochs)d %(bar)s  [Current: Loss %(current_loss)f Top1: %(current_top1)f ]  %(current)d/%(total)d [ %(percent)3d%% ]" % args
+        message = "\033[1;32;40m%(mode)s Epoch:  %(epoch)d/%(epochs)d %(bar)s\033[0m  [Current: Loss %(current_loss)f Top1: %(current_top1)f lr: %(current_lr).2e ]  %(current)d/%(total)d \033[1;32;40m[ %(percent)3d%% ]\033[0m" % args
+        self.write_message = "%(mode)s Epoch:  %(epoch)d/%(epochs)d %(bar)s  [Current: Loss %(current_loss)f Top1: %(current_top1)f %(current_lr).2e ]  %(current)d/%(total)d [ %(percent)3d%% ]" % args
         print("\r" + message, file=self.output, end="")
 
     def done(self):

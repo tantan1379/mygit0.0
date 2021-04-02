@@ -5,7 +5,7 @@ import os
 from config import config
 
 
-def save_checkpoint(state, is_best, fold):
+def save_checkpoint(state, is_best, fold): # state是一个记录训练结果的字典
     filename = config.weights + config.model_name + os.sep + str(fold) + os.sep + "_checkpoint.pth.tar"
     torch.save(state, filename)
     if is_best:
@@ -19,10 +19,7 @@ def save_checkpoint(state, is_best, fold):
 class AverageMeter(object):
     """Computes and stores the average and current value"""
 
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
+    def __init__(self): 
         self.val = 0
         self.avg = 0
         self.sum = 0
@@ -62,7 +59,6 @@ def accuracy(output, target, topk=(1,)):
     with torch.no_grad():
         maxk = max(topk)  
         batch_size = target.size(0)
-        print(output.shape)
         _, pred = output.topk(maxk, 1, True, True) # torch.topk(input, k, dim=None, largest=True, sorted=True, out=None) 返回输入张量指定dim的k个最大值
         pred = pred.t()
         correct = pred.eq(target.view(1, -1).expand_as(pred))

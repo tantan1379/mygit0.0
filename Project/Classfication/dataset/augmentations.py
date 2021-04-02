@@ -2,7 +2,7 @@ import random
 from typing import List, Tuple
 
 import albumentations as A
-import cv2
+from cv2 import cv2
 import numpy as np
 from albumentations.augmentations.functional import brightness_contrast_adjust, elastic_transform
 from albumentations.pytorch import ToTensor
@@ -79,7 +79,6 @@ def get_medium_augmentations(image_size):
         A.VerticalFlip(p=0.5)
     ])
 
-
 def get_hard_augmentations(image_size):
     return A.Compose([
         A.OneOf([
@@ -136,7 +135,6 @@ def get_hard_augmentations(image_size):
             A.Transpose()
         ])
     ])
-
 
 def get_hard_augmentations_v2(image_size):
     return A.Compose([
@@ -231,7 +229,6 @@ def get_train_transform(image_size, augmentation=None):
         A.Normalize(),
         ToTensor()
     ])
-
 
 def get_test_transform(image_size):
     longest_size = max(image_size[0], image_size[1])

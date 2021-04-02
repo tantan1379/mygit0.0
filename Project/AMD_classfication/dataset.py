@@ -27,7 +27,7 @@ class AMD_CL(data.Dataset):
         elif mode == "val":
             self.images = self.images[int(0.6 * len(self.images)):int(0.8 * len(self.images))]
             self.labels = self.labels[int(0.6 * len(self.labels)):int(0.8 * len(self.labels))]
-        elif mode == "train" :
+        elif mode == "test" :
             self.images = self.images[int(0.8 * len(self.images)):]
             self.labels = self.labels[int(0.8 * len(self.labels)):]
         else:
