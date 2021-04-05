@@ -19,7 +19,7 @@ from models.model import *
 from utils import *
 from IPython import embed
 
-# 1. set random.seed and cudnn performance
+# 1. 设置种子和初始参数
 random.seed(config.seed)
 np.random.seed(config.seed)
 torch.manual_seed(config.seed)
@@ -28,7 +28,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = config.gpus  # 指定GPU训练
 torch.backends.cudnn.benchmark = True  # 加快卷积计算速度
 
 
-# 2. evaluate func
+# 2. 验证
 def evaluate(val_loader, model, optimizer, criterion, epoch):
     # 2.1 为损失和准确率创建“标尺”（拥有计数、求和、求平均功能）
     losses = AverageMeter()  
@@ -60,36 +60,6 @@ def evaluate(val_loader, model, optimizer, criterion, epoch):
     return [losses.avg, top1.avg]
 
 
-# 3. 用于提交的测试函数，计算特征图矩阵
-def test(test_loader, model, folds):
-    # 3.1 confirm the model converted to cuda
-    csv_map = OrderedDict({"filename": [], "probability": []})
-    model.cuda()
-    model.eval()
-    for _, (input, filepath) in enumerate(tqdm(test_loader)):
-        # 3.2 change everything to cuda and get only basename
-        filepath = [os.path.basename(x) for x in filepath]
-        with torch.no_grad():
-            image_var = input.cuda()
-            # 3.3.output
-            # print(filepath)
-            # print(input,input.shape)
-            y_pred = model(image_var)
-            print(y_pred.shape)
-            smax = nn.Softmax(1)
-            smax_out = smax(y_pred)
-        # 3.4 save probability to csv files
-        csv_map["filename"].extend(filepath)
-        for output in smax_out:
-            prob = ";".join([str(i) for i in output.data.tolist()])
-            csv_map["probability"].append(prob)
-    result = pd.DataFrame(csv_map)
-    result["probability"] = result["probability"].map(
-        lambda x: [float(i) for i in x.split(";")])
-    result.to_csv("./submit/{}_submission.csv".format(config.model_name +
-                  "_" + str(folds)), index=False, header=None)
-
-
 # 4. 主函数
 def main():
     fold = 0
@@ -115,7 +85,7 @@ def main():
                            amsgrad=True, weight_decay=config.weight_decay)
     criterion = nn.CrossEntropyLoss().cuda()
     # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer,"max",verbose=1,patience=3)
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.6)
 
     # 4.3 重启参数
     start_epoch = 0
@@ -144,8 +114,8 @@ def main():
 
     # 4.5 get files and split for K-fold dataset
     # 4.5.1 读入文件列表
-    train_data_list = get_files(config.train_data, "train")
-    val_data_list = get_files(config.val_data, "val")
+    train_data_list = get_files(config.train_data)
+    val_data_list = get_files(config.val_data)
     # test_files = get_files(config.test_data,"test")
 
     """ 
@@ -163,7 +133,7 @@ def main():
     # 4.5.4 将文件列表加载到dataloader中
     train_dataloader = DataLoader(ChaojieDataset(train_data_list), batch_size=config.batch_size, shuffle=True,
                                   collate_fn=collate_fn, pin_memory=True, num_workers=0)
-    val_dataloader = DataLoader(ChaojieDataset(val_data_list, train=False), batch_size=config.batch_size * 2,
+    val_dataloader = DataLoader(ChaojieDataset(val_data_list), batch_size=config.batch_size * 2,
                                 shuffle=True, collate_fn=collate_fn, pin_memory=False, num_workers=0)
     # test_dataloader = DataLoader(ChaojieDataset(test_files,test=True),batch_size=1,shuffle=False,pin_memory=False)
   

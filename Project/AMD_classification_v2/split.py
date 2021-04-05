@@ -22,6 +22,8 @@ for i in range(1,4):
 # put all images' path into a list
 for c in os.listdir(root):
     images+=glob.glob(os.path.join(root,c,"*.jpg"))
+    images+=glob.glob(os.path.join(root,c,"*.png"))
+    images+=glob.glob(os.path.join(root,c,"*.jpeg"))
 # put all the label corresponding to the image into a list
 for img in images:
     labels.append(img.split(os.sep)[-2])

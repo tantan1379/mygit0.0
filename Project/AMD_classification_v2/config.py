@@ -1,16 +1,16 @@
 class DefaultConfigs(object):
     # 1.string parameters
     train_data = "F:\\Lab\\AMD_CL\\split\\train\\"
-    test_data = ""
-    val_data = "F:\\Lab\\AMD_CL\\split\\val\\"
+    test_data = "F:\\Lab\\AMD_CL\\split\\test\\"
+    val_data = "F:\\Dataset\\traffic-sign\\test\\"
     model_name = "resnet18"
     weights = ".\\checkpoints\\"
     best_models = weights + "best_model\\"
     submit = ".\\submit\\"
     logs = ".\\logs\\"
     gpus = "0"
-    resume = 'best' # restart, best, last
-    augmen_level = "medium"  # "light","hard","hard2"
+    resume = 'restart' # restart, best, last
+    augmen_level = "light"  # "light","hard","hard2"
 
     # 2.numeric parameters
     epochs = 40

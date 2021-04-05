@@ -2,8 +2,8 @@
 //
 //using namespace std;
 //
-//class Animal {
-//	virtual void speak() = 0;
+//class Animal { //³éÏóÀà
+//	virtual void speak() = 0;  //´¿Ğéº¯Êı
 //};
 //
 //class Cat:public Animal {

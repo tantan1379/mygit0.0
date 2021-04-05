@@ -107,8 +107,6 @@ def evaluate(md, loader):
     accuracy = acc_num.sum(1) / target_num.sum(1)
     accuracy = (accuracy.numpy()[0] * 100).round(3)
 
-
-
     return accuracy
 
 
