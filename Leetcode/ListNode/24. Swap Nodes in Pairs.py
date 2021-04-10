@@ -2,7 +2,7 @@
 Given a linked list, swap every two adjacent nodes and return its head.
 '''
 
-from utils import ListNode,ForeachLinkList,InitLinkList
+from utils import *
 
 
 def swapPairs(head: ListNode):

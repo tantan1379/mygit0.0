@@ -180,12 +180,6 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_db, batch_size=batch_size, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_db, batch_size=batch_size, shuffle=False, num_workers=0)
     test_loader = DataLoader(test_db, batch_size=batch_size, shuffle=False, num_workers=0)
-    print(len(train_loader))
-    print(len(train_db))
-    print(len(test_loader))
-    print(len(test_db))
-    print(len(val_loader))
-    print(len(val_db))
     print("Classes & Labels are as follows:")
     resnet50 = models.resnet50(pretrained=True)
     fc_inputs = resnet50.fc.in_features

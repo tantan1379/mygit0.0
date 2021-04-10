@@ -1,4 +1,5 @@
 """
+
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order,
  and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -6,7 +7,7 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 加起来，则会返回一个新的链表来表示它们的和。
 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
 """
-from utils import ListNode, ForeachLinkList, InitLinkList
+from utils import *
 
 
 def addTwoNumbers(l1, l2):

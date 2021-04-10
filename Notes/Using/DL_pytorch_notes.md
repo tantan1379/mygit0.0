@@ -190,3 +190,10 @@ Pandas的基础结构可以分为两种：**数据框和序列**。
 ---
 
 二、`sum(p.numel() for p in model.parameters() if p.requires_grad)` 计算网络的参数量
+
+
+
+
+
+## Copy:
+

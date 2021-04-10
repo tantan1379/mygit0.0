@@ -1,18 +1,15 @@
 '''
 You are given the head of a singly linked-list. The list can be represented as:
-
 L0 → L1 → … → Ln - 1 → Ln
-
 Reorder the list to be on the following form:
-
 L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
-
 You may not modify the values in the list's nodes. Only nodes themselves may be changed.
 '''
 
-from utils import ListNode, InitLinkList, ForeachLinkList
+from utils import *
 
 
+# space O(n) time O(n)
 def reorderList(head):
     """
     :type head: ListNode
@@ -25,8 +22,7 @@ def reorderList(head):
     while(cur):
         newlist.append(cur)
         cur = cur.next
-    i = 0
-    j = len(newlist)-1
+    i, j = 0, len(newlist)-1
     while i < j:
         newlist[i].next = newlist[j]
         i += 1
@@ -46,27 +42,10 @@ def reorderList_(head):
     """
     if(not head or not head.next):
         return head
-    # step1: find the midpoint
-    fast,slow = head,head
-    while(fast.next and fast.next.next):
-        fast = fast.next.next
-        slow = slow.next
-    mid = slow
-    # step2: split the linklist
+    first_end = FindMid(head)
+    l2 = ReverseLinkList(first_end.next)
+    first_end.next = None
     l1 = head
-    l2 = mid.next
-    slow.next = None
-    # step3: inverse the second linklist
-    cur = l2
-    prev = None
-    while(cur):
-        pnext = cur.next
-        cur.next = prev
-        prev = cur
-        cur = pnext
-    l2 = prev
-    # # step4: merge the two linklist
-    res = l1
     while(l1 and l2):
         temp1 = l1.next
         temp2 = l2.next
@@ -74,10 +53,15 @@ def reorderList_(head):
         l1 = temp1
         l2.next = l1
         l2 = temp2
+    if(not l1 and l2):
+        l2.next = None
+    if(not l2 and l1):
+        l1.next = None
     return head
 
+
 if __name__ == "__main__":
-    myarr = [1, 2, 3, 4, 5,6]
+    myarr = [1, 2, 3, 4, 5]
     head = InitLinkList(myarr)
     ForeachLinkList(head)
     # newhead1,newhead2 = reorderList_(head)

@@ -2,14 +2,16 @@
 Given the head of a singly linked list, reverse the list, and return the reversed list.
 '''
 
-from utils import ListNode,InitLinkList,ForeachLinkList
+from utils import *
+
 
 def reverseList(head):
     """
     :type head: ListNode
     :rtype: ListNode
     """
-    if(not head or not head.next): return head
+    if(not head or not head.next):
+        return head
     prev = None
     cur = head
     while(cur):
@@ -21,7 +23,7 @@ def reverseList(head):
 
 
 if __name__ == '__main__':
-    headarr = [1,2,3,4,5,6,7,8]
+    headarr = [1, 2, 3, 4, 5, 6, 7, 8]
     head = InitLinkList(headarr)
     ForeachLinkList(head)
     newhead = reverseList(head)

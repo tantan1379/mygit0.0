@@ -16,7 +16,7 @@ leision (n.)损伤
 
 edema (n.)水肿
 
-angiography （n.)血管造影术
+angiography (n.)血管造影术
 
 metabolic (adj.)代谢的
 
@@ -30,41 +30,37 @@ neovascular (adj.) 新生血管的
 
 degeneration (n.) 退化
 
-pro-re-nata（PRN） 随机应变的
+pro-re-nata(PRN) 随机应变的
 
 pathology (n.) 病理学
 
 anatomy (n.) 解剖学
 
-cardiovascular（adj.) 心血管的
+cardiovascular(adj.) 心血管的
 
 biomarkers (n.) 生物标志物
 
-treatment-naive （adj.) 未治疗的
+treatment-naive (adj.) 未治疗的
 
-
-
-Schematic diagram 原理图
-
-retinal nerve fibre layer（RNFL） 视网膜神经纤维层
+retinal nerve fibre layer(RNFL) 视网膜神经纤维层
 
 subretinal pigment epithelium 视网膜色素上皮层
 
 ground true 金标准
 
+requirement score(RQS) 需求评分
+
 vascular endothelial growth factor(VEGF) 血管内皮生长因子
 
+diabetic  retinopathy(DR) 糖尿病性视网膜病变(白内障) 
 
+cystoid macular edema(CME)黄斑囊样水肿
 
-diabetic  retinopathy(DR) 糖尿病性视网膜病变（白内障） 
+macular hole(MH)黄斑裂孔
 
-cystoid macular edema（CME）黄斑囊样水肿
+serous retinal detachment(SRD)浆液性视网膜脱离
 
-macular hole（MH）黄斑裂孔
-
-serous retinal detachment（SRD）浆液性视网膜脱离
-
-Alzheimer’s disease 阿尔兹海默症（老年痴呆）
+Alzheimer’s disease 阿尔兹海默症(老年痴呆)
 
 retinal vein occlusion (RVO) 视网膜静脉阻塞
 
@@ -72,33 +68,53 @@ retinal vein occlusion (RVO) 视网膜静脉阻塞
 
 
 
-#### computerese
+#### computerese and algorithm
 
 access-specifier 访问修饰符
 
 interpolation 插值
 
+deviation (n.)误差   
+
+pixwise (adj.)像素级的   
+
+stratify 分层，分类
+
+overhead (n.)开销    
+
+frame (n.)帧   
+
+replicate 复制
+
 robustness 健壮性
 
 Application program interface(API) 应用程序接口
+
+maximum likelihood estimation 最大似然估计
+
+Schematic diagram 原理图
+
+aggregate 聚合，加和
 
 ---
 
 ### 2.Word
 
+homogeneous (adj.) 均匀的，同种的
+
 recurrence (n.) 再次发生
 
-heterogeneous （adj.) 由很多类组成的
+heterogeneous (adj.) 由很多类组成的
 
-longitudinal （adj.) 纵向的
+longitudinal (adj.) 纵向的
 
 intermediate (adj.) 中间的
 
-suboptimal（adj.) 未达标准的
+suboptimal (adj.) 未达标准的
 
-variance (n.)方差   
+variance (n.) 方差   
 
-subspace (n.)子空间   
+subspace (n.) 子空间   
 
 decay (n.)衰减   
 
@@ -116,23 +132,13 @@ optimal (adj.)最优的
 
 counterintuitive (adj.)反直觉的   
 
-formally (adv.)形式上   
-
 simultaneously (adv.)同时   
 
-auxiliary (adj.)辅助的   
-
 reformulate (v.)重构   
-
-hypothesize (v.)假设   
-
-notorious (adj.)众所周知坏的   
 
 ensemble (n.)总体   
 
 nontrivial (adj.)重要的   
-
-frame (n.)帧   
 
 annotate (v.)注释   
 
@@ -140,35 +146,19 @@ subtract (v.)减去
 
 contract (v.)收缩   
 
-extract (v.)提取    
+seamless (adj.) 无缝的   
 
-semantic (adj.)语义的   
+arbitrary (adj.) 任意的   
 
-seamless (adj.)无缝的   
+extrapolate (v.) 推导   
 
-arbitrary (adj.)任意的   
-
-extrapolate (v.)推导   
-
-deformations (n.)变形    
-
-invariance (n.)不变性    
-
-applicable (n.)适用的    
-
-overhead (n.)开销    
-
-deviation (n.)误差   
-
-pixwise (adj.)像素级的   
+deformations (n.) 变形    
 
 asymptotically (adv.)渐进地
 
 retain (v.)保持
 
 generalization (n.)泛化性
-
-relatively (adv.)相对地
 
 indispensable (adj.)不可缺少的
 
@@ -200,6 +190,8 @@ There is large consent that... 人们普遍认为
  at the same time minimize the ... while ...maximal 最小化..的同时取得最大的...
 
 optimal use of ... 充分利用...
+
+in a nutshell 简而言之
 
 
 

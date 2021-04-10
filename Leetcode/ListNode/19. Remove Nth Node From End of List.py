@@ -1,7 +1,7 @@
 '''
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 '''
-from utils import ListNode,ForeachLinkList,InitLinkList
+from utils import *
 
 
 def removeNthFromEnd(head, n):
@@ -18,7 +18,6 @@ def removeNthFromEnd(head, n):
 
 
 if __name__ == "__main__":
-    head = InitLinkList([1,2,3,4,5,6])
-    res = removeNthFromEnd(head,3)
+    head = InitLinkList([1, 2, 3, 4, 5, 6])
+    res = removeNthFromEnd(head, 3)
     ForeachLinkList(res)
-    

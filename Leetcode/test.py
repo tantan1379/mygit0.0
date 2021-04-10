@@ -4,6 +4,5 @@
 # author: twh
 # time: 2020/12/14 21:45
 
-a = 1,2
-
-print(type(a))
+a = [1,2,3]
+print(a[::-1])

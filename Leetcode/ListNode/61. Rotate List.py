@@ -2,7 +2,7 @@
 Given the head of a linked list, rotate the list to the right by k places.
 '''
 
-from utils import ListNode, InitLinkList, ForeachLinkList
+from utils import *
 
 
 def rotateRight(head, k):
@@ -22,15 +22,18 @@ def rotateRight(head, k):
     cur.next = None
     return newhead
 
-def rotateRight_(head,k):
-    if not head or not head.next: return head
-    cur,slow,fast = head,head,head
+
+def rotateRight_(head, k):
+    if not head or not head.next:
+        return head
+    cur, slow, fast = head, head, head
     n = 0
     while(cur):
         cur = cur.next
         n += 1
-    if not k or not k%n: return head
-    for _ in range(k%n):
+    if not k or not k % n:
+        return head
+    for _ in range(k % n):
         fast = fast.next
     while(fast.next):
         slow = slow.next
@@ -42,10 +45,10 @@ def rotateRight_(head,k):
 
 
 if __name__ == "__main__":
-    head1 = InitLinkList([1,2,3,4,5])
-    head2 = InitLinkList([1,2,3,4,5])
+    head1 = InitLinkList([1, 2, 3, 4, 5])
+    head2 = InitLinkList([1, 2, 3, 4, 5])
     ForeachLinkList(head1)
-    res1 = rotateRight(head1,3)
+    res1 = rotateRight(head1, 3)
     ForeachLinkList(res1)
-    res2 = rotateRight_(head2,3)
+    res2 = rotateRight_(head2, 3)
     ForeachLinkList(res2)
