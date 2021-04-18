@@ -23,7 +23,7 @@ ListNode* reorderList(ListNode* head) {
 }
 
 void test143() {
-	vector<int> myarr = {1,2,3,4,5,6};
+	vector<int> myarr{1,2,3,4,5,6};
 	ListNode* head = Init_LinkList(myarr);
 	Foreach_LinkList(head);
 	ListNode* res = reorderList(head);

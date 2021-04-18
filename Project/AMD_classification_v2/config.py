@@ -10,11 +10,11 @@ class DefaultConfigs(object):
     logs = ".\\logs\\"
     gpus = "0"
     resume = "restart" # restart, best, last
-    augmen_level = "light"  # "light","hard","hard2"
+    augmen_level = None  # "light","hard","hard2"
 
     # 2.numeric parameters
     epochs = 50
-    batch_size = 50
+    batch_size = 32
     img_height = 300
     img_weight = 300
     num_classes = 3

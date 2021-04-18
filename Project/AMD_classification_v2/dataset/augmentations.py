@@ -1,6 +1,6 @@
 import random
 from typing import List, Tuple
-
+from torchvision import transforms as T
 import albumentations as A
 from cv2 import cv2
 import numpy as np
@@ -221,8 +221,8 @@ def get_train_transform(image_size, augmentation=None):
     return A.Compose([
         #Resize(int(config.img_height*1.5),int(config.img_weight*1.5)),
         CenterCrop(config.img_height,config.img_weight),
+        # T.RandomRotation(15),
         A.LongestMaxSize(longest_size, interpolation=cv2.INTER_CUBIC),
-
         A.PadIfNeeded(image_size[0], image_size[1],
                       border_mode=cv2.BORDER_CONSTANT, value=0),
         augmentation,

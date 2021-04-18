@@ -1,5 +1,5 @@
 from torch.utils.data import Dataset
-from torchvision import transforms as T
+from torchvision import transforms
 from config import config
 from PIL import Image
 from itertools import chain
@@ -22,22 +22,36 @@ torch.cuda.manual_seed_all(config.seed)
 
 # 2.define dataset
 class ChaojieDataset(Dataset):
-    def __init__(self, label_list):
+    def __init__(self,label_list,transform):
         imgs = []
         for _, row in label_list.iterrows():
             imgs.append((row["filename"], row["label"]))
         self.imgs = imgs
-            
+        self.transform = transform
 
     def __getitem__(self, index):
-        filename, label = self.imgs[index]
-        img = Image.open(filename).convert("RGB")
-        img = np.array(img)
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        img = cv2.resize(
-            img, (int(config.img_height * 1.5), int(config.img_weight * 1.5)))
-        img = get_train_transform(
-            img.shape, augmentation=config.augmen_level)(image=img)["image"]
+        img, label = self.imgs[index] # img : string, labels : tensor
+        trans = {
+            'train': transforms.Compose([
+                lambda x: Image.open(x).convert("RGB"),
+                transforms.Resize((int(config.img_height * 1.5), int(config.img_weight * 1.5))),
+                transforms.RandomRotation(15),
+                transforms.CenterCrop((config.img_height,config.img_weight)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+
+            ]),
+            'val': transforms.Compose([
+                transforms.CenterCrop((config.img_height,config.img_weight)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            ])
+        }
+        if self.transform:
+            img = trans['train'](img)
+        else:
+            img = trans['val'](img)
+        label = torch.tensor(label)
         return img, label
 
     def __len__(self):
@@ -55,10 +69,10 @@ def collate_fn(batch):
 
 
 def get_files(root):
-    all_images,labels = [], []
+    all_images, labels = [], []
     # image_folders = list(map(lambda x: root + x, os.listdir(root)))
     for f in os.listdir(root):
-        all_images += glob.glob(os.path.join(root,f, "*.jpg"))
+        all_images += glob.glob(os.path.join(root, f, "*.jpg"))
         # all_images += glob.glob(os.path.join(root,f, "*.png"))
     while " " in all_images:
         all_images.remove(" ")

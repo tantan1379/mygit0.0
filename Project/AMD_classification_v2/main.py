@@ -79,12 +79,12 @@ def main():
                     os.sep + str(fold) + os.sep)
     # 4.2 输入模型、优化器、损失函数
     model = get_net().cuda()
-    # optimizer = optim.SGD(model.parameters(),lr = config.lr,momentum=0.9,weight_decay=config.weight_decay)
     optimizer = optim.Adam(model.parameters(), lr=config.lr,
                            amsgrad=True, weight_decay=config.weight_decay)
+    # optimizer = optim.SGD(model.parameters(),lr = config.lr,momentum=0.9,weight_decay=config.weight_decay)
     criterion = nn.CrossEntropyLoss().cuda()
-    # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer,"max",verbose=1,patience=3)
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.6)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=10, threshold=0.0001, threshold_mode='rel', cooldown=0, min_lr=0, eps=1e-08, verbose=False)
+    # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.6)
 
     # 4.3 重启参数
     start_epoch = 0
@@ -131,9 +131,9 @@ def main():
     """
     # train_data_list,val_data_list = train_test_split(origin_files,test_size = 0.1,stratify=origin_files["label"])
     # 4.5.4 将文件列表加载到dataloader中
-    train_dataloader = DataLoader(ChaojieDataset(train_data_list), batch_size=config.batch_size, shuffle=True,
+    train_dataloader = DataLoader(ChaojieDataset(train_data_list,'train'), batch_size=config.batch_size, shuffle=True,
                                   collate_fn=collate_fn, pin_memory=True, num_workers=0)
-    val_dataloader = DataLoader(ChaojieDataset(val_data_list), batch_size=config.batch_size * 2,
+    val_dataloader = DataLoader(ChaojieDataset(val_data_list,'val'), batch_size=config.batch_size * 2,
                                 shuffle=True, collate_fn=collate_fn, pin_memory=False, num_workers=0)
     # test_dataloader = DataLoader(ChaojieDataset(test_files,test=True),batch_size=1,shuffle=False,pin_memory=False)
 
@@ -145,17 +145,18 @@ def main():
     for epoch in range(start_epoch, config.epochs):
         train_progressor = ProgressBar(mode="Train", epoch=epoch, total_epoch=config.epochs,
                                        model_name=config.model_name,total=len(train_dataloader))
-        for iter, (input, target) in enumerate(train_dataloader):
+        for iter, (img, target) in enumerate(train_dataloader):
             train_progressor.current = iter
             model.train()
-            input = input.cuda()
+            img = img.cuda()
             target = torch.from_numpy(np.array(target)).long().cuda()
-            output = model(input)
+            output = model(img)
             loss = criterion(output, target)
-            precision1_train, _ = accuracy(
-                output, target, topk=(1, 2))
-            train_losses.update(loss.item(), input.size(0))
-            train_top1.update(precision1_train[0], input.size(0))
+            # print(loss.item())
+            precision1_train = accuracy(
+                output, target, topk=(1,))
+            train_losses.update(loss.item(), img.size(0))
+            train_top1.update(precision1_train[0], img.size(0))
             train_progressor.current_loss = train_losses.avg
             train_progressor.current_top1 = train_top1.avg
             train_progressor.current_lr = optimizer.param_groups[0]["lr"]
@@ -163,9 +164,8 @@ def main():
             optimizer.zero_grad()  # 梯度归零
             loss.backward()  # 反向传播
             optimizer.step()  # 梯度更新
-
             train_progressor()  # 调用__call__，每batch更新一次进度条
-        scheduler.step()  # 学习率衰减更新
+        scheduler.step(loss.item())  # 学习率衰减更新
         train_progressor.done()  # 调用进度条的done函数：（1）将进度条拉满 （2）向log文件输出当前的结果
         # 验证过程
         valid_info = evaluate(val_dataloader, model,

@@ -1,4 +1,4 @@
-# Vocabulary
+# mVocabulary
 
 ### 1、Professional
 
@@ -66,8 +66,6 @@ retinal vein occlusion (RVO) 视网膜静脉阻塞
 
 
 
-
-
 #### computerese and algorithm
 
 access-specifier 访问修饰符
@@ -99,6 +97,8 @@ aggregate 聚合，加和
 ---
 
 ### 2.Word
+
+monotonically (adv.) 单调地
 
 homogeneous (adj.) 均匀的，同种的
 
@@ -192,6 +192,10 @@ There is large consent that... 人们普遍认为
 optimal use of ... 充分利用...
 
 in a nutshell 简而言之
+
+reach maturity 达到成熟
+
+The takeaway is that... 结论是
 
 
 
