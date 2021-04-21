@@ -7,8 +7,17 @@ from torch.utils.data import DataLoader
 from cv2 import cv2
 from PIL import Image
 
-# ---------------------------------------
-# TODO 数据处理
+# ----------------------------------------------------------------
+#TODO Tensor
+# a = torch.Tensor([3,3])
+# print(a)
+# a = torch.tensor([x for x in range(-2,4)]).reshape(2,3)
+# print(torch.sigmoid(a))
+point = torch.zeros([3,3]).scatter_(1,(1,1),1)
+print(point)
+
+# ----------------------------------------------------------------
+#TODO 数据处理
 # all_images = []
 # image_folders = list(map(lambda x: root + x, os.listdir(root)))
 
@@ -21,21 +30,20 @@ from PIL import Image
 # print("")
 # print(all_images)
 
-# --------------------------------------
+# ----------------------------------------------------------------
+#TODO 尝试dataframe
+# root = "C:\\Users\\TRT\\Desktop\\testset\\"
+# images,labels,all_files = [],[],[]
+# title = ['images','labels']
+# for file in os.listdir(root):
+#     images+=glob.glob(os.path.join(root,file,"*.jpg"))
+# for image in images:
+#     labels.append(int(image.split(os.sep)[-2]))
 
-# TODO 尝试dataframe
-root = "C:\\Users\\TRT\\Desktop\\testset\\"
-images,labels,all_files = [],[],[]
-title = ['images','labels']
-for file in os.listdir(root):
-    images+=glob.glob(os.path.join(root,file,"*.jpg"))
-for image in images:
-    labels.append(int(image.split(os.sep)[-2]))
-
-img_label = np.concatenate((np.array(images).reshape(-1,1),np.array(labels).reshape(-1,1)),axis=1)
-# print(img_label)
-index = [i for i in range(1,len(labels)+1)]
-all_files= pd.DataFrame({"images":images,"labels":labels},index=index)
+# img_label = np.concatenate((np.array(images).reshape(-1,1),np.array(labels).reshape(-1,1)),axis=1)
+# # print(img_label)
+# index = [i for i in range(1,len(labels)+1)]
+# all_files= pd.DataFrame({"images":images,"labels":labels},index=index)
 
 # print(all_files[all_files['labels']>=2]) # 布尔索引：选取labels>1的所有信息
 # print(all_files[lambda all_files:all_files.columns[0]])
@@ -46,19 +54,17 @@ all_files= pd.DataFrame({"images":images,"labels":labels},index=index)
 # random.shuffle(images)
 # print(images[:5])
 
-# --------------------------------------
-
-# TODO 查看dataloader原理
+# ----------------------------------------------------------------
+#TODO 查看dataloader原理
 # train_data_list = get_files(config.train_data)
-# train_dataloader = DataLoader(ChaojieDataset(train_data_list), batch_size=config.batch_size, shuffle=True,
+# train_dataloader = DataLoader(ChaojieDataset(train_data_list, transform = 'val'),batch_size=config.batch_size, shuffle=True,
 #                                pin_memory=True, num_workers=0)
 # for iter,(image,label) in enumerate(train_dataloader):
-#     # print(image)
 #     pass
 
-# ---------------------------------------
 
-# TODO 解决cv2必须以英文路径作为输入问题：用PIL.Image读入，再转换
+# ----------------------------------------------------------------
+#TODO 解决cv2必须以英文路径作为输入问题：用PIL.Image读入，再转换
 # img = "F:\\Lab\\AMD_CL\\split\\val\\2\\高章红_000007.jpg"
 # img_1 = Image.open(img).convert("RGB")
 # img_r1 = img_1.resize((int(config.img_height * 1.5), int(config.img_weight * 1.5)),Image.ANTIALIAS)
@@ -67,9 +73,8 @@ all_files= pd.DataFrame({"images":images,"labels":labels},index=index)
 # img_2 = cv2.imread(img)
 # print(img_2.shape)
 
-# ---------------------------------------
-
-# TODO 删除列表中的空值
+# ----------------------------------------------------------------
+#TODO 删除列表中的空值
 # mylist = ['1','2','3','','4']
 # # while None in mylist:
 # #     mylist.remove(None)
@@ -77,3 +82,20 @@ all_files= pd.DataFrame({"images":images,"labels":labels},index=index)
 #     mylist.remove("")
 
 # print(mylist)
+
+# ----------------------------------------------------------------
+#TODO size和shape
+# a = torch.tensor([[[1,2,3],[4,5,6]]])
+# print(a.shape)
+# print(a.size())
+# print(a.dim())
+
+# ----------------------------------------------------------------
+#TODO squeeze
+# a = torch.tensor([_ for _ in range(1,7)]).reshape(1,2,3)
+# print(a)
+# print(a.numel())
+# print(torch.squeeze(a))
+
+# ----------------------------------------------------------------
+#TODO dice

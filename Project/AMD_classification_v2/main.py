@@ -44,7 +44,6 @@ def evaluate(val_loader, model, optimizer, criterion, epoch):
             input = input.cuda()
             target = torch.from_numpy(np.array(target)).long().cuda()  # 范式
             output = model(input)  # 将input输入模型得到预测输出
-
             loss = criterion(output, target)  # 根据预测和真实标签求损失
 
             # 2.3.2 计算准确率并实时更新进度条的显示内容
@@ -152,10 +151,12 @@ def main():
             target = torch.from_numpy(np.array(target)).long().cuda()
             output = model(img)
             loss = criterion(output, target)
+            print(loss.item())
             # print(loss.item())
             precision1_train = accuracy(
                 output, target, topk=(1,))
-            train_losses.update(loss.item(), img.size(0))
+            print(img.shape)
+            train_losses.update(loss.item(), img.size(0))  # img.size(0) = batch
             train_top1.update(precision1_train[0], img.size(0))
             train_progressor.current_loss = train_losses.avg
             train_progressor.current_top1 = train_top1.avg
@@ -164,7 +165,7 @@ def main():
             optimizer.zero_grad()  # 梯度归零
             loss.backward()  # 反向传播
             optimizer.step()  # 梯度更新
-            train_progressor()  # 调用__call__，每batch更新一次进度条
+            train_progressor()  # 调用__call__，每batch更新并输出一次进度条
         scheduler.step(loss.item())  # 学习率衰减更新
         train_progressor.done()  # 调用进度条的done函数：（1）将进度条拉满 （2）向log文件输出当前的结果
         # 验证过程

@@ -27,9 +27,11 @@ def evaluate(model, loader):
     top1 = AverageMeter()
     for _, (input, target) in enumerate(loader):
         input = input.cuda()
+        print(input.size(0))
         target = torch.from_numpy(np.array(target)).long().cuda()
         output = model(input)
         precision, _ = accuracy(output, target, topk=(1, 2))
+        print(input.size(0))
         top1.update(precision[0], input.size(0))
     return top1.avg.item()
 
@@ -58,11 +60,11 @@ def main():
     test_files = get_files(config.test_data)
     # load dataset
     test_dataloader = DataLoader(ChaojieDataset(
-        test_files,'val'), batch_size=1, shuffle=False, pin_memory=False)
+        test_files,'val'), batch_size=10, shuffle=False, pin_memory=False)
     best_model = torch.load(
         "checkpoints/best_model/%s/0/model_best.pth.tar" % config.model_name)
     model.load_state_dict(best_model["state_dict"])
-    # precision = evaluate(model, test_dataloader)
+    precision = evaluate(model, test_dataloader)
     labels = [1, 2, 3]
     confusion = ConfusionMatrix(num_classes=len(labels), labels=labels)
     model.eval()

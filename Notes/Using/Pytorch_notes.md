@@ -10,6 +10,9 @@
 * dim=0，在二维中就是压缩纵向；dim=1，压缩横向
 * 需要将model先移动到cuda后，再创建optimizer
 * 应该在optimizer更新后，再对scheduler进行更新
+* 对于tensor，.shape和.size()是相同的都输出张量的形状，.dim()则表示有多少个维度，.shape[0]和.size(0)也是一样的
+* tensor和Tensor(FloatTensor)的区别在于，tensor只能接受现有的数据，Tensor可以接受数据的维度()或数据([])
+* pytorch中，参数矩阵w一般将输出后的通道写前面，即y=x@w.t() 注意：.t()方法只适合于2d的tensor
 
 ------
 
@@ -17,36 +20,26 @@
 
 **Convert**
 
-1、cpu –> gpu：`data.cuda()`
+* cpu-gpu：`data.cuda()`
+  gpu-cpu：`data.cpu()`
 
-2、gpu –> cpu：`data.cpu()`
+* 数组-tensor： `torch.from_numpy(data)`  
 
-3、Numpy.ndarray –> Tensor **（导入）**： `torch.from_numpy(data)`  
+* Tensor-数组 ：`data.numpy()`
 
-4、Tensor –> Numpy.ndarray ：`data.numpy()`
-
-5、Tensor -> DoubleTensor: `torch.set_default_tensor_tepe(torch.DoubleTensor)`
-
-6、将List转换为Tensor，生成单精度浮点类型的张量：`torch.Tensor(data)` 同torch.FloatTensor()
-
-7、根据原始数据类型生成相应的张量：`torch.tensor(data)`
-
-8、将tensor转换为python对象类型：`a.item()`：对只含一个元素的tensor使用，,
+* 将tensor转换为python对象类型：`a.item()`：对只含一个元素的tensor使用
 
 **Create tensor**
 
-1、随机创建指定形状的Tensor：`torch.Tensor(*sizes)`
+* 随机创建指定形状的Tensor：`torch.Tensor(sizes)` 直接写维度
 
-2、生成从s到e(不包含e)，步长为step的一维Tensor ：`torch.arange(s, e, step)`
-生成从s到e(包含e)，元素个数为steps的一维Tensor：`torch.linspace(s,e,steps)`
+* 创建指定值的Tensor: `torch.tensor(data)` 或 `torch.Tensor(data)`
 
-3、生成随机分布的Tensor:
-标准分布(0,1正态分布) ：`torch.randn(*size)`
-均匀分布：`torch.rand(*size)`
-
-4、创建特殊的Tensor：`torch.ones(*size)` `torch.zeros(*size)` `torch.eyes(*size)`
-
-5、创建具有相同值的Tensor:`torch.full(*size,val)` 如果size写[]，生成标量
+* 创建指定的Tensor: `torch.zeros(*sizes, requires_grad=False`
+  `torch.ones(*sizes, requires_grad=False)`
+  `torch.eye(n, requires_grad=False)`
+  `torch.empty(*sizes, requires_grad=False)`
+  `torch.full(*size, fill_value, requires_grad=False)`
 
 **Index&slice**
 
@@ -54,58 +47,58 @@
 
 **Dimension**
 
-1、调整Tensor的形状（常用）：`tensor.view()` e.g.:`x=x.view(x.size(0),-1)`
-**notes:** 在神经网络中图像的维度为(batchsize,channel,height,width),一定要以这个顺序和逻辑进行view；view前后的size要相同
+* 调整Tensor的形状（常用）：`tensor.view()` e.g.:`x=x.view(x.size(0),-1)`
 
-2、修改维度
-（增维）：`tensor.unsqueeze(pos)` 在posi前的一个位置加一维
-（减维）：`tensor.squeeze()`自动挤压所有值为1的维度 `tensor.squeeze(pos)`挤压（减去）pos位置的维度
-（维度扩展）：`tensor.expand(*size)` [=] 
-**note:** 1、自动复制broadcast tensor，变换前后维数不变；  2、需要扩张的维值必须为1；  3、如果某一位置填-1则表示该维保持不变
+  注意点：在神经网络中图像的维度为(batchsize,channel,height,width),一定要以这个顺序和逻辑进行view；view前后的size要相同
 
-3、交换维度：
-（二维）：`tensor.t()`
-（多维）：`tensor.transpose(dim1,dim2)`
-（通用）：`tensor.permute(dim1,dim2,dim3,...)`
+* 修改维度
+  （增维）：`tensor.unsqueeze(pos)` 在posi前的一个位置加一维
+  （减维）：`tensor.squeeze()`自动挤压所有值为1的维度 `tensor.squeeze(pos)`挤压（减去）pos位置的维度
+  （维度扩展）：`tensor.expand(*size)` [=] 
+  注意点：1、自动复制broadcast tensor，变换前后维数不变；  2、需要扩张的维值必须为1；  3、如果某一位置填-1则表示该维保持不变
 
-4、Broadcast：
-先在某一维度**之前**插入维度(unsqueeze)，再在大小为1的维度上进行扩张(expand)
-
-5、topk:
-
-`torch.topk(input, k, dim=None, largest=True, sorted=True, out=None) -> (Tensor, LongTensor)`
+* 交换维度：
+  （二维）：`tensor.t()`
+  （多维）：`tensor.transpose(dim1,dim2)`  常用于图片和torch之间的维度交换（PIL读入的图片channel在最后，torch的channel在高宽的前面)
+  （通用）：`tensor.permute(dim1,dim2,dim3,...)`
 
 **Merge&Split**
 
-1、cat:`torch.cat([a,b],dim) `两个拼接的tensor必须在dim维之外的维度均相等
+* cat:`torch.cat([a,b],dim) `两个拼接的tensor必须在dim维之外的维度均相等
+
+  
+
+**Math**
+
+* 元素乘：`a*b`
+* 矩阵乘：`torch.matmul(a,b) `或 `a@b`   当维度高于2时，只取最后两维进行运算
+* 元素幂：`a.pow(2)` 或 `a**2`
+* 近似值：向下取整：`a.floor()` 向上取整：`a.ceil()` 取整：`a.trunc()` 取小数：`a.frac()` 四舍五入：`a.round()`
+* 裁剪：`a.clamp(min,max)` 只有一个参数表示只限定最小值
+* 求范数：`a.norm(level,dim)`
+* 统计学：`a.min()`  `a.max() ` `a.mean()`  `a.prod()`(累乘)  `a.sum()`
+* 
 
 **Property**
 
-查看Tensor的大小：`tensor.size()` 
-查看Tensor的大小：`tensor.shape` 
-统计Tensor的元素个数：`Tensor.numel()`   
-
-**Comparision**
-
-(1) tensor和Tensor(FloatTensor)的区别在于，tensor只能接受现有的数据，Tensor可以接受数据的维度()或数据([])
-为避免混淆，使用时建议，要维度用大写Tensor，要具体数据用小写tensor
+* 查看Tensor的大小：`tensor.size()` 或 `tensor.shape` 
+* 统计Tensor的元素个数：`Tensor.numel()` 
 
 ------
 
 ## Numpy 
-**（以下用np表示）**
-1、`data.numpy()` 
-将tensor类型转换为numpy类型; 
+**（以下用np表示）** 
 
-2、`np.equal(x1, x2)` 
-Return (x1 == x2) element-wise. 
-比较两个数组的值(若相等,在对应位置上取True，不等取False)；
+* `np.equal(x1, x2)` 
+  Return (x1 == x2) element-wise. 
+  比较两个数组的值(若相等,在对应位置上取True，不等取False)；
 
-3、`np.all()`Test whether all array elements along a given axis evaluate to True.
+* `np.all()`Test whether all array elements along a given axis evaluate to True.
 
-4、`if array`判断numpy数组是否为空，将列表作为布尔值，若不为空返回True，否则视为False;
+* `if array`判断numpy数组是否为空，将列表作为布尔值，若不为空返回True，否则视为False;
 
-5、`np.newaxis`用于给数组增加维度：e.g.`aa=a[:,np.newaxis]`在第一维后加一维(1)
+* `np.newaxis`用于给数组增加维度：e.g.`aa=a[:,np.newaxis]`在第一维后加一维(1)
+* `np.hstack(*list，dim)`用于拼接矩阵
 
 ---
 ## Torchvision
