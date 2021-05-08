@@ -299,17 +299,21 @@ python操作excel主要用到xlrd和xlwt这两个库，即xlrd是读excel，xlwt
 
 ## File operation
 
-* **判断并创建文件夹：**`if not os.path.exists(path): os.mkdir(newfile)`
 * **重命名文件：**`os.rename(src,dst)` src为源文件（原名），dst为目标文件（新名）
+
 * **删除文件：**`os.remove(path)`
+
 * **复制文件：**`shutil.copyfile(src,dst)`
+
 * **返回所有匹配的文件路径列表：**`glob.glob()` ”\*”, “?”, “[]”。”*”匹配0个或多个字符；”?”匹配单个字符；”[]”匹配指定范围内的字符
+
 * **创建/删除文件夹：**
 
-`os.mkdir(path)` # 只能创建一级目录
-`os.mkdirs(path)` # 可以创建多级目录
-`os.rmdir(path)` # 文件必须存在，只能删除空目录
-`shutil.retree(path)` # （非空）删除整个目录（先导入）
+  `if not os.path.exists(path)` 判断文件是否存在
+  `os.mkdir(path) ` 创建一级目录
+  `os.mkdirs(path)` 创建多级目录
+  `os.rmdir(path)` 文件必须存在，只能删除空目录
+  `shutil.retree(path)`（非空）删除整个目录（先导入）
 
 * **获取路径内容：**
 

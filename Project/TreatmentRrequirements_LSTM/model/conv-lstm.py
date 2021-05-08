@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 
 class ConvLSTMCell(nn.Module):
@@ -45,8 +44,8 @@ class ConvLSTMCell(nn.Module):
         else:
             assert shape[0] == self.Wci.size()[2], 'Input Height Mismatched!'
             assert shape[1] == self.Wci.size()[3], 'Input Width Mismatched!'
-        return (Variable(torch.zeros(batch_size, hidden, shape[0], shape[1])).cuda(),
-                Variable(torch.zeros(batch_size, hidden, shape[0], shape[1])).cuda())
+        return (torch.zeros(batch_size, hidden, shape[0], shape[1]).cuda(),
+                torch.zeros(batch_size, hidden, shape[0], shape[1]).cuda())
 
 
 class ConvLSTM(nn.Module):
@@ -96,12 +95,13 @@ if __name__ == '__main__':
     # gradient check
     convlstm = ConvLSTM(input_channels=512, hidden_channels=[128, 64, 64, 32, 32], kernel_size=3, step=5,
                         effective_step=[4]).cuda()
-    loss_fn = torch.nn.MSELoss()
+    print(convlstm)
+    # loss_fn = torch.nn.MSELoss()
 
-    input = Variable(torch.randn(1, 512, 64, 32)).cuda()
-    target = Variable(torch.randn(1, 32, 64, 32)).double().cuda()
+    # input = torch.randn(1, 512, 64, 32).cuda()
+    # target = torch.randn(1, 32, 64, 32).double().cuda()
 
-    output = convlstm(input)
-    output = output[0][0].double()
-    res = torch.autograd.gradcheck(loss_fn, (output, target), eps=1e-6, raise_exception=True)
-    print(res)
+    # output = convlstm(input)
+    # output = output[0][0].double()
+    # res = torch.autograd.gradcheck(loss_fn, (output, target), eps=1e-6, raise_exception=True)
+    # print(res)

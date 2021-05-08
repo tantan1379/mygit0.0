@@ -1,12 +1,10 @@
-# mVocabulary
+# Vocabulary
 
 ### 1、Professional
 
 #### ophthalmology(paper)
 
 curation (n.) 管理
-
-retinal (adj.)视网膜的
 
 retinopathy (n.)视网膜病变
 
@@ -20,7 +18,7 @@ angiography (n.)血管造影术
 
 metabolic (adj.)代谢的
 
-morbidity (n.)发病
+morbidity (n.)发病率；病态
 
 fovea (n.) 中央凹
 
@@ -28,15 +26,17 @@ macula (n.) 黄斑
 
 neovascular (adj.) 新生血管的
 
-degeneration (n.) 退化
-
 pro-re-nata(PRN) 随机应变的
 
 pathology (n.) 病理学
 
+pathological (adj.) 病理
+
 anatomy (n.) 解剖学
 
 cardiovascular(adj.) 心血管的
+
+VEGF 血管内皮生长因子
 
 biomarkers (n.) 生物标志物
 
@@ -45,6 +45,10 @@ treatment-naive (adj.) 未治疗的
 retinal nerve fibre layer(RNFL) 视网膜神经纤维层
 
 subretinal pigment epithelium 视网膜色素上皮层
+
+visual acuity 视力
+
+intravitreal 玻璃体的
 
 ground true 金标准
 
@@ -63,6 +67,8 @@ serous retinal detachment(SRD)浆液性视网膜脱离
 Alzheimer’s disease 阿尔兹海默症(老年痴呆)
 
 retinal vein occlusion (RVO) 视网膜静脉阻塞
+
+best-corrected visual acuity (BCVA)  最佳矫正视力
 
 
 
@@ -98,9 +104,21 @@ aggregate 聚合，加和
 
 ### 2.Word
 
+irreversible (adj.) 不可逆的
+
+discrepancy (n.) 差异
+
+socioeconomic (adj.) 社会经济的
+
 spatio-temporal (adj.) 时空的
 
+forge (v.) 形成
+
+resolve (v.) 溶解；解决
+
 monotonically (adv.) 单调地
+
+paradigm （n.) 范式
 
 homogeneous (adj.) 均匀的，同种的
 
@@ -163,6 +181,11 @@ indispensable (adj.)不可缺少的
 ---
 
 ### 3.Match
+
+the extent of ..的程度
+
+protocol specified criteria in the ...协议中制定的标准
+
 concurrent with 与...一起的   
 
 akin to 类似于...   

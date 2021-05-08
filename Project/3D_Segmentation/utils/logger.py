@@ -44,8 +44,8 @@ class Test_Logger():
         self.save_path = save_path
         self.save_name = save_name
 
-    def update(self,name,log):
-        item = OrderedDict({'img_name':name})
+    def update(self,log):
+        item = OrderedDict({})
         item.update(log)
         print("\033[0;33mTest:\033[0m",log)
         self.update_csv(item)

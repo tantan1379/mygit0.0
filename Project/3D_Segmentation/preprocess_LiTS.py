@@ -71,13 +71,13 @@ class LITS_preprocess:
             # 将金标准中肝脏和肝肿瘤的标签融合为一个
             seg_array[seg_array > 0] = 1
         # 将灰度值在阈值之外的截断掉
-        ct_array[ct_array > self.upper] = self.upper
-        ct_array[ct_array < self.lower] = self.lower
+        # ct_array[ct_array > self.upper] = self.upper
+        # ct_array[ct_array < self.lower] = self.lower
 
         # 降采样，（只对x和y轴进行降采样，slice轴的spacing进行归一化）
         ct_array = ndimage.zoom(
             ct_array, (self.slice_thickness, self.y_down_scale, self.x_down_scale), order=3)
-        # seg_array = ndimage.zoom(seg_array, (self.slice_thickness, self.y_down_scale, self.x_down_scale), order=0)
+        seg_array = ndimage.zoom(seg_array, (self.slice_thickness, self.y_down_scale, self.x_down_scale), order=0)
 
         # 找到肝脏区域开始和结束的slice，并各向外扩张
         z = np.any(seg_array, axis=(1, 2))
@@ -119,9 +119,12 @@ class LITS_preprocess:
 
     def write_train_val_test_name_list(self):
         data_name_list = os.listdir(self.fixed_path + "/" + "data")
+        test_list = os.listdir("F:\\Dataset\\gliomas\\batch1\\data")
         data_num = len(data_name_list)
         print('the fixed dataset total numbers of samples is :', data_num)
         random.shuffle(data_name_list)
+        test_num = len(test_list)
+        print('test dataset total numbers of samples is :', test_num)
 
         train_rate = 0.75
         val_rate = 0.25
@@ -130,9 +133,11 @@ class LITS_preprocess:
         train_name_list = data_name_list[0:int(data_num*train_rate)]
         val_name_list = data_name_list[int(
             data_num*train_rate):int(data_num*(train_rate + val_rate))]
+        test_name_list = test_list[:]
 
         self.write_name_list(train_name_list, "train_name_list.txt")
         self.write_name_list(val_name_list, "val_name_list.txt")
+        self.write_name_list(test_name_list, "test_name_list.txt")
 
     def write_name_list(self, name_list, file_name):
         f = open(self.fixed_path + file_name, 'w')
@@ -142,8 +147,8 @@ class LITS_preprocess:
 
 
 if __name__ == '__main__':
-    raw_dataset_path = 'F:\\Dataset\\gliomas\\batch2\\'
-    fixed_dataset_path = './fixed/'
+    raw_dataset_path = 'F:\\Dataset\\gliomas\\batch1\\'
+    fixed_dataset_path = './test/'
     classes = 2  # 分割肝脏则置为2（二类分割），分割肝脏和肿瘤则置为3（三类分割）
     tool = LITS_preprocess(raw_dataset_path, fixed_dataset_path, classes)
     tool.fix_data()                            # 对原始图像进行修剪并保存
