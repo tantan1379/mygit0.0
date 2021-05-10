@@ -371,6 +371,21 @@ drop_last：告诉如何处理数据集长度除于batch_size余下的数据。T
 
 ---
 
+## Model
+
+显示参数的变化情况（张量大小）：
+
+```python
+for param in model.parameters():
+	print(param.size())
+```
+
+
+
+
+
+---
+
 ## Optimizer & Scheduler & Loss_fn
 
 * **优化器设置：**

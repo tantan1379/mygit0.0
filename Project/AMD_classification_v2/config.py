@@ -1,8 +1,8 @@
 class DefaultConfigs(object):
     # 1.string parameters
-    train_data = "F:\\Lab\\AMD_CL\\split\\train\\"
-    test_data = "F:\\Lab\\AMD_CL\\split\\test\\"
-    val_data = "F:\\Lab\\AMD_CL\\split\\val\\"
+    train_data = "F:\\\Dataset\\AMD_CL\\split\\train\\"
+    test_data = "F:\\\Dataset\\AMD_CL\\split\\test\\"
+    val_data = "F:\\\Dataset\\AMD_CL\\split\\val\\"
     model_name = "resnet18"
     weights = ".\\checkpoints\\"
     best_models = weights + "best_model\\"

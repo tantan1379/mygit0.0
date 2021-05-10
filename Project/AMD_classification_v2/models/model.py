@@ -1,6 +1,9 @@
 import torchvision
 import torch.nn.functional as F
 from torch import nn
+import sys
+import torch
+sys.path.append("..")
 from config import config
 
 
@@ -43,3 +46,20 @@ def get_net():
     model.avgpool = nn.AdaptiveAvgPool2d(1)
     model.fc = nn.Linear(512, config.num_classes)
     return model
+
+
+if __name__ == "__main__":
+    # model = get_net()
+    # for param in model.parameters():
+    #     print(type(param), param.size())
+    hidden = 100
+    features = 2000
+    layers = 2
+    output=1
+    LSTM= nn.LSTM(features,hidden,layers,batch_first=True)
+    Linear= nn.Linear(hidden,output)
+    for param in LSTM.parameters():
+        print(param.size())
+    print("")
+    for param in Linear.parameters():
+        print(param.size())
