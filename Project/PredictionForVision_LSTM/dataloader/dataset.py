@@ -9,7 +9,6 @@ from torchvision import transforms
 from config import config
 import numpy as np
 import random
-from sklearn.metrics import r2_score,mean_squared_error
 
 
 random.seed(config.seed)
@@ -52,52 +51,52 @@ class TreatmentRequirement(Dataset):
     def __getitem__(self,index):
         img, label = self.imgs[index], self.labels[index]
         nimg = torch.zeros(self.seq_len,3,config.img_height,config.img_width)
-        trans = {
-            "train": transforms.Compose([
-                lambda x: Image.open(x).convert("L"),
-                transforms.Resize((int(config.img_height * 1.25),
-                                   int(config.img_width * 1.25))),
-                transforms.RandomRotation(15),
-                transforms.CenterCrop((config.img_height, config.img_width)),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
-                    0.229, 0.224, 0.225])
-            ]),
-            "val": transforms.Compose([
-                lambda x: Image.open(x).convert("L"),
-                transforms.Resize((int(config.img_height * 1.25),
-                    int(config.img_width * 1.25))),
-                transforms.CenterCrop((config.img_height, config.img_width)),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
-                                     0.229, 0.224, 0.225])
-            ])}
-
-        # trans = transforms.Compose([
+        # trans = {
+        #     "train": transforms.Compose([
         #         lambda x: Image.open(x).convert("RGB"),
-        #         transforms.Resize((int(config.img_height),
-        #             int(config.img_width))),
-        #         # transforms.CenterCrop((config.img_height, config.img_width)),
+        #         transforms.Resize((int(config.img_height * 1.25),
+        #                            int(config.img_width * 1.25))),
+        #         transforms.RandomRotation(15),
+        #         transforms.CenterCrop((config.img_height, config.img_width)),
+        #         transforms.ToTensor(),
+        #         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
+        #             0.229, 0.224, 0.225])
+        #     ]),
+        #     "val": transforms.Compose([
+        #         lambda x: Image.open(x).convert("RGB"),
+        #         transforms.Resize((int(config.img_height * 1.25),
+        #             int(config.img_width * 1.25))),
+        #         transforms.CenterCrop((config.img_height, config.img_width)),
         #         transforms.ToTensor(),
         #         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
         #                              0.229, 0.224, 0.225])
-        # ])
+        #     ])}
 
-        if self.mode=="train":
-            for f in range(self.seq_len):
-                single_img = img[f]
-                single_img = trans["train"](single_img)
-                nimg[f] = single_img
-        else:
-            for f in range(self.seq_len):
-                single_img = img[f]
-                single_img = trans["val"](single_img)
-                nimg[f] = single_img
+        trans = transforms.Compose([
+                lambda x: Image.open(x).convert("RGB"),
+                transforms.Resize((int(config.img_height),
+                    int(config.img_width))),
+                # transforms.CenterCrop((config.img_height, config.img_width)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
+                                     0.229, 0.224, 0.225])
+        ])
 
-        # for f in range(self.seq_len):
+        # if self.mode=="train":
+        #     for f in range(self.seq_len):
         #         single_img = img[f]
-        #         single_img = trans(single_img)
+        #         single_img = trans["train"](single_img)
         #         nimg[f] = single_img
+        # else:
+        #     for f in range(self.seq_len):
+        #         single_img = img[f]
+        #         single_img = trans["val"](single_img)
+        #         nimg[f] = single_img
+
+        for f in range(self.seq_len):
+                single_img = img[f]
+                single_img = trans(single_img)
+                nimg[f] = single_img
 
         label = torch.Tensor(label)
         return nimg, label

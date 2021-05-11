@@ -31,6 +31,8 @@ def evaluate(md, loader):
         data, target = data.to(device), target.to(device)
         output = md(data)
         _, prediction = torch.max(output, 1)
+        print(prediction.shape)
+        print(target.shape)
         correct_num += torch.eq(prediction, target).cpu().sum()
     return 100 * correct_num / total_num
 
@@ -99,12 +101,12 @@ if __name__ == '__main__':
         device = torch.device('cpu')
 
     # Load dataset and model
-    train_db = Pokemon(r'F:\Database\pokemon', 224, 'train')  # dataset(0%~70%) as train_set
-    val_db = Pokemon(r'F:\Database\pokemon', 224, 'val')  # dataset(70%~85%) as validation_set
-    test_db = Pokemon(r'F:\Database\pokemon', 224, 'test')  # dataset(85%~100%) as test_set
-    train_loader = DataLoader(train_db, batch_size=batch_size, shuffle=True, num_workers=18)
-    val_loader = DataLoader(val_db, batch_size=batch_size, shuffle=False, num_workers=18)
-    test_loader = DataLoader(test_db, batch_size=batch_size, shuffle=False, num_workers=18)
+    train_db = Pokemon(r'F:\\Dataset\\pokemon\\', 224, 'train')  # dataset(0%~70%) as train_set
+    val_db = Pokemon(r'F:\\Dataset\\pokemon\\', 224, 'val')  # dataset(70%~85%) as validation_set
+    test_db = Pokemon(r'F:\\Dataset\\pokemon\\', 224, 'test')  # dataset(85%~100%) as test_set
+    train_loader = DataLoader(train_db, batch_size=batch_size, shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_db, batch_size=batch_size, shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_db, batch_size=batch_size, shuffle=False, num_workers=0)
     print("Classes & Labels are as follows:")
     print(train_db.get_label())
     model = resnet50(4).to(device)

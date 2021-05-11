@@ -1,2 +1,4 @@
 */checkpoints/
 ./3D_Segmentation/fixed_data
+*.ckpt
+*.h5

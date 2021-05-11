@@ -88,7 +88,9 @@ def train(model, _train_data, valid_data, epochs, optimizer, criterion):
             with torch.no_grad():
                 im = Variable(im.cuda())
                 label = Variable(label.cuda())
+            print(label.shape)
             output = model(im)
+            print(output.shape)
             loss = criterion(output, label)
             valid_loss += loss.item()
             valid_acc += get_acc(output, label)
@@ -258,9 +260,9 @@ if __name__ == "__main__":
     train_batch_size = int(args.train_batch_size)
     test_batch_size = int(args.test_batch_size)
     # 载入数据库和网络
-    train_set = CIFAR10('./data', train=True, transform=data_tf, download=False)
+    train_set = CIFAR10('./data', train=True, transform=data_tf, download=True)
     train_data = data.DataLoader(train_set, batch_size=train_batch_size, shuffle=True)
-    test_set = CIFAR10('./data', train=False, transform=data_tf, download=False)
+    test_set = CIFAR10('./data', train=False, transform=data_tf, download=True)
     test_data = data.DataLoader(test_set, batch_size=test_batch_size, shuffle=False)
     net = DenseNet(3, 10)  # 输入为rgb三通道图片，cifar10数据集任务为将数据分为10类
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')

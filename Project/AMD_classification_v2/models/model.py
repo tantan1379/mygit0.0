@@ -49,17 +49,5 @@ def get_net():
 
 
 if __name__ == "__main__":
-    # model = get_net()
-    # for param in model.parameters():
-    #     print(type(param), param.size())
-    hidden = 100
-    features = 2000
-    layers = 2
-    output=1
-    LSTM= nn.LSTM(features,hidden,layers,batch_first=True)
-    Linear= nn.Linear(hidden,output)
-    for param in LSTM.parameters():
-        print(param.size())
-    print("")
-    for param in Linear.parameters():
-        print(param.size())
+    model = torchvision.models.resnet18(pretrained=True)
+    print(model)

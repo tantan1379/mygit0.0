@@ -45,7 +45,6 @@ def evaluate(val_loader, model, optimizer, criterion, epoch):
             target = torch.from_numpy(np.array(target)).long().cuda()  # 范式
             output = model(input)  # 将input输入模型得到预测输出
             loss = criterion(output, target)  # 根据预测和真实标签求损失
-
             # 2.3.2 计算准确率并实时更新进度条的显示内容
             precision = accuracy(output, target)
             losses.update(loss.item(), input.size(0))
@@ -130,6 +129,8 @@ def main():
     """
     # train_data_list,val_data_list = train_test_split(origin_files,test_size = 0.1,stratify=origin_files["label"])
     # 4.5.4 将文件列表加载到dataloader中
+    # dataset = ChaojieDataset(train_data_list,'train')
+    # print(dataset.imgs)
     train_dataloader = DataLoader(ChaojieDataset(train_data_list,'train'), batch_size=config.batch_size, shuffle=True,
                                   collate_fn=collate_fn, pin_memory=True, num_workers=0)
     val_dataloader = DataLoader(ChaojieDataset(val_data_list,'val'), batch_size=config.batch_size * 2,
@@ -150,6 +151,8 @@ def main():
             img = img.cuda()
             target = torch.from_numpy(np.array(target)).long().cuda()
             output = model(img)
+            print(target.shape)
+            print(output.shape)
             loss = criterion(output, target)
             precision1_train = accuracy(output, target)
             train_losses.update(loss.item(), img.size(0))  # img.size(0) = batch

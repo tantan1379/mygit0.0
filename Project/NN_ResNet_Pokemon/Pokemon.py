@@ -96,6 +96,6 @@ class Pokemon(Dataset):
         return img, label
 
 
-train_db = Pokemon(r'F:\Database\pokemon', 224, 'train')  # dataset(0%~70%) as train_set
-val_db = Pokemon(r'F:\Database\pokemon', 224, 'val')  # dataset(70%~85%) as validation_set
-test_db = Pokemon(r'F:\Database\pokemon', 224, 'test')  # dataset(85%~100%) as test_set
+# train_db = Pokemon(r'F:\Database\pokemon', 224, 'train')  # dataset(0%~70%) as train_set
+# val_db = Pokemon(r'F:\Database\pokemon', 224, 'val')  # dataset(70%~85%) as validation_set
+# test_db = Pokemon(r'F:\Database\pokemon', 224, 'test')  # dataset(85%~100%) as test_set

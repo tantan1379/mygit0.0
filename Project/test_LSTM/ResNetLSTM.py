@@ -106,7 +106,7 @@ class net:
                 img = transform(img)
                 img=torch.autograd.Variable(img,requires_grad=True)
                 ndata[s][f] = img
-        print(label)
+        # print(label)
         nlabel = label/15
         
         nlabel = torch.Tensor(nlabel)
@@ -134,6 +134,7 @@ class net:
         with torch.no_grad():
             for i in range(sampleNum):
                 input = data[i]
+                # print(input.size())
                 x = n.conv1(input)
                 x = n.bn1(x)
                 x = n.relu(x)
@@ -173,6 +174,7 @@ class net:
             data = self.data
             label = self.label
 
+        # print(label)
         sampleNum = self.sampleNum
         num_test = int(0.2*sampleNum)
         train_input = data[num_test:]
@@ -180,9 +182,6 @@ class net:
         test_input = data[:num_test]
         test_output = label[:num_test]
         trainNum = sampleNum-num_test
-        if trainNum < batchNum:
-            raise Exception('样本太少，或减少batch size')
-
         self.LSTM.train()
         self.Linear.train()
 
@@ -198,12 +197,14 @@ class net:
             min_loss = 10
             for x, y in GetBatch(train_input, train_output,
                                  trainNum, batchNum):
-
+                print(x.size())
+                # print(y)
                 self.opt.zero_grad()
                 out, _ = self.LSTM(x)
                 out_last = out[:, -1, :]
                 out_last = torch.sigmoid(out_last)
                 pred = self.Linear(out_last)
+                # print(pred.size())
                 loss = torch.sqrt(self.criteria(pred, y))
                 loss.backward()
                 self.opt.step()

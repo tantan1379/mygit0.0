@@ -36,7 +36,7 @@ class LSTM(nn.Module):
         # features = 18432
         features = 2048
         layers = 2
-        output = 3
+        output = 1
         self.LSTM = nn.LSTM(features, lstm_hidden_size, layers, batch_first=True)
         self.Linear = nn.Linear(lstm_hidden_size, output)
 
@@ -46,22 +46,3 @@ class LSTM(nn.Module):
         out_last = self.Linear(out_last)
         return out_last
 
-
-if __name__ == '__main__':
-    import sys
-    sys.path.append("..")
-    from dataloader.dataset import TreatmentRrequirement
-    model1 = ExtractFeature().cuda()
-    model2 = LSTM().cuda()
-    train_dataset = TreatmentRrequirement(config.data_path, transform='train')
-    criteria = nn.BCELoss()
-    optimizer = torch.optim.Adam(model1.parameters(), config.lr)
-
-    img_extract = torch.zeros(len(train_dataset), config.seq_len,18432)
-    with torch.no_grad():
-        for i in range(len(train_dataset)):
-            input = train_dataset[i][0]
-            input = input.cuda()
-            output = model1(input)
-            img_extract[i] = output
-            

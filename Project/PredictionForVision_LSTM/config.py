@@ -5,11 +5,11 @@ class DefaultConfigs(object):
     model_name = 'ResNetLSTM'
     # 2.numeric parameters
     epochs = 30
-    lr = 1e-4
+    lr = 1e-3
     # weight_decay = 1e-3
     seed = 2021
     seq_len = 3
-    batch_size = 2
+    batch_size = 1
     img_height = 224
     img_width = 224
     num_pat = 104
