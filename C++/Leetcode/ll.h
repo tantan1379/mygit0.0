@@ -31,3 +31,5 @@ void test024();
 ListNode* SwapNodesinPairs(ListNode* head);
 void test143();
 ListNode* reorderList(ListNode* head);
+void test020();
+bool inValid(string s);

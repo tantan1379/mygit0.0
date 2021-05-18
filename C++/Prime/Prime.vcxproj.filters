@@ -96,6 +96,9 @@
     <ClCompile Include="14_operator_overloading_1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="13__friend.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="point.h">

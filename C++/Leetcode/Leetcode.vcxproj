@@ -144,6 +144,7 @@
     <ClCompile Include="021.Merge Two Sorted Lists.cpp" />
     <ClCompile Include="061.Rotate List.cpp" />
     <ClCompile Include="143. Reorder List.cpp" />
+    <ClCompile Include="020. Valid Parentheses.cpp" />
     <ClCompile Include="LinkList_template.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="024.SwapNodesinPairs.cpp" />

@@ -39,6 +39,9 @@
     <ClCompile Include="002.Add two number.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="020. Valid Parentheses.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ll.h">
