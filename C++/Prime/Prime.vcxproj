@@ -139,37 +139,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="0_model.cpp" />
-    <ClCompile Include="11_friend_1.cpp" />
-    <ClCompile Include="12_friend_2.cpp" />
-    <ClCompile Include="13_friend_3.cpp" />
-    <ClCompile Include="13__friend.cpp" />
-    <ClCompile Include="14_operator_overloading_1.cpp" />
-    <ClCompile Include="15_plural_addition.cpp" />
-    <ClCompile Include="16_operator_overloading_2.cpp" />
-    <ClCompile Include="17_operator_overloading_3.cpp" />
-    <ClCompile Include="18_inherit.cpp">
+    <ClCompile Include="11 全局函数友元.cpp" />
+    <ClCompile Include="12 友元类.cpp" />
+    <ClCompile Include="13 成员函数做友元.cpp" />
+    <ClCompile Include="14 友元测试.cpp" />
+    <ClCompile Include="15 加法运算符重载.cpp" />
+    <ClCompile Include="16 运算符重载实现虚数加法.cpp" />
+    <ClCompile Include="17 自增运算符和左移运算符重载.cpp" />
+    <ClCompile Include="18 赋值运算符重载.cpp" />
+    <ClCompile Include="19 继承.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/d1 reportSingleClassLayoutSon %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/d1 reportSingleClassLayoutSon %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <ClCompile Include="1_new.cpp" />
-    <ClCompile Include="20_Polymorphism.cpp" />
-    <ClCompile Include="21_caculator.cpp" />
-    <ClCompile Include="22_pure_virtual_function.cpp" />
-    <ClCompile Include="23_drink.cpp" />
-    <ClCompile Include="24_pure_virtual_destructor.cpp" />
-    <ClCompile Include="2_reference.cpp" />
-    <ClCompile Include="3_override.cpp" />
-    <ClCompile Include="4_class_test.cpp" />
-    <ClCompile Include="5_private.cpp" />
-    <ClCompile Include="6_cube.cpp" />
-    <ClCompile Include="7_point_circle.cpp" />
-    <ClCompile Include="8_structor.cpp" />
-    <ClCompile Include="9_copy.cpp" />
-    <ClCompile Include="7_1circle.cpp" />
-    <ClCompile Include="7_2point.cpp" />
-    <ClCompile Include="10_static.cpp" />
-    <ClCompile Include="19_rhombus_inherit.cpp" />
+    <ClCompile Include="01 new的使用.cpp" />
+    <ClCompile Include="20 多态.cpp" />
+    <ClCompile Include="21 多态实现计算机类.cpp" />
+    <ClCompile Include="22 纯虚函数.cpp" />
+    <ClCompile Include="23 多台实现喝茶类.cpp" />
+    <ClCompile Include="24 多态实现立方体和正方体类.cpp" />
+    <ClCompile Include="25 虚析构和纯虚析构.cpp" />
+    <ClCompile Include="26 计算机组装类.cpp" />
+    <ClCompile Include="02 引用.cpp" />
+    <ClCompile Include="03 重载.cpp" />
+    <ClCompile Include="04 类.cpp" />
+    <ClCompile Include="05 私有属性.cpp" />
+    <ClCompile Include="06 立方体.cpp" />
+    <ClCompile Include="07 圆和线类.cpp" />
+    <ClCompile Include="08 构造函数.cpp" />
+    <ClCompile Include="09 拷贝构造.cpp" />
+    <ClCompile Include="07 圆类.cpp" />
+    <ClCompile Include="07 线类.cpp" />
+    <ClCompile Include="10 静态变量.cpp" />
+    <ClCompile Include="27 文本文件操作.cpp" />
+    <ClCompile Include="28 二进制文件操作.cpp" />
+    <ClCompile Include="demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="circle.h" />

@@ -1,6 +1,6 @@
-#include <iostream>
-
-using namespace std;
+//#include <iostream>
+//
+//using namespace std;
 
 ////创建立方体类
 ////设计属性和行为，属性包括长宽高，行为包括获取立方体的面积和体积

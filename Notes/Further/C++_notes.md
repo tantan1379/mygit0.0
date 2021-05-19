@@ -2,29 +2,31 @@
 
 ## 小知识
 
-1、**左值**的意思就是可以放在等式左边的值。
+1、**左值**的意思就是可以放在等式左边的值；
 
-2、**==**前后颠倒的作用：当我们使用==判断符号时：等号左边写常量，使用NULL == xxx，而不是xxx == NULL。判断时，等号左边写常量，等号右边写变量，防止少写一个等号带来的严重BUG。
+2、**==**前后颠倒的作用：当我们使用==判断符号时：等号左边写常量，使用NULL == xxx，而不是xxx == NULL；判断时，等号左边写常量，等号右边写变量，防止少写一个等号带来的严重BUG；
 
-3、**#pragma once**的作用：防止头文件重复包含。
+3、**#pragma once**的作用：防止头文件重复包含；
 
-4、**static**关键词的作用：static修饰的变量只会被初始化一次（若静态变量在定义时未显式地指定初值，则自动初始化为相应类型的零值<隐式初始化>）但可以被多次赋值对该变量进行修改。注意初始化是在编译时进行，变量的赋值是在函数或程序运行时进行。
+4、**static**关键词的作用：static修饰的变量只会被初始化一次（若静态变量在定义时未显式地指定初值，则自动初始化为相应类型的零值<隐式初始化>）但可以被多次赋值对该变量进行修改；注意初始化是在编译时进行，变量的赋值是在函数或程序运行时进行；
 
 5、**const**和**define**的区别:   
 
-* define是在预处理阶段展开，const是在编译运行阶段使用。
-* define宏定义没有类型，不做任何类型检查而仅仅是展开。const常量有具体的类型，在编译阶段会执行类型检查。
-* const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是像#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝（因为是全局的只读变量，存在静态区），而 #define 定义的常量在内存中有若干个拷贝。
-* 编译器通常不为普通const 常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。 
+* define是在预处理阶段展开，const是在编译运行阶段使用；
+* define宏定义没有类型，不做任何类型检查而仅仅是展开。const常量有具体的类型，在编译阶段会执行类型检查；
+* const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是像#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝（因为是全局的只读变量，存在静态区），而 #define 定义的常量在内存中有若干个拷贝；
+* 编译器通常不为普通const 常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高； 
 
-6、`char a[]="abcd"`实际上定义了一个字符数组在栈中，再将字符串常量“abcd”的值copy给栈区的字符数组。
+6、`char a[]="abcd"`实际上定义了一个字符数组在栈中，再将字符串常量“abcd”的值copy给栈区的字符数组；
 
 7、全局变量、局部变量、全局静态变量的区别:
 
-* 全局变量作用于整个项目，只需要在一个源文件中定义就可以作用于所有的源文件，其它不包括全局变量定义的文件需要用`extern`关键字再次声明这个全局变量;而全局静态变量仅作用于当前源文件。
-* 全局变量（无论是否静态）都会被编译器自动初始化为0；而局部变量如果不初始化会报错。   
+* 全局变量作用于整个项目，只需要在一个源文件中定义就可以作用于所有的源文件，其它不包括全局变量定义的文件需要用`extern`关键字再次声明这个全局变量;而全局静态变量仅作用于当前源文件；
+* 全局变量（无论是否静态）都会被编译器自动初始化为0；而局部变量如果不初始化会报错；   
 
-8、函数的大括号后可以不用加“;"，不影响程序运行。因为当编译器读到“}”时就知道了函数的结束，";"会被认为为一个空语句。
+8、函数的大括号后可以不用加“;"，不影响程序运行。因为当编译器读到“}”时就知道了函数的结束，";"会被认为为一个空语句；
+
+9、使用cin.get(s1, num)时，num会包含一个回车号的位置；
 
 
 
@@ -34,7 +36,7 @@
 
 C：在C语言中，NULL被定义为：`#define NULL` ((void *)0)，不存在二义性
 
-C++：NULL是一种宏定义，在C++的`stddef.h`头文件中，NULL被定义为常量0或无类型指针(void*)，存在二义性。
+C++：NULL是一种宏定义，在C++的`stddef.h`头文件中，NULL被定义为常量0或无类型指针(void*)，存在二义性；
 `nullptr`是C++11新出的定义，不包含于头文件中，属于一种关键字，nullptr仅代表一个指针变量
 
 **总结：**为提高代码的健壮性，我们通常使用`nullptr`表示指针空值
@@ -503,8 +505,6 @@ C++程序在执行时，可以将内存划分为4个区域：
 
 
 ## 4、类和对象
-
-
 
 C++面向对象的三大特性：**封装、继承、多态** 
 C++认为：万事万物都是对象，对象上有其属性和行为 
@@ -1164,6 +1164,417 @@ int main(){
 
 #### 4.7.4 虚析构和纯虚析构
 
+多态使用时，如果子类中有属性开辟到堆区，那么父类指针在释放时无法调用到子类的析构代码
+
+解决方式：将父类中的析构函数改为**虚析构**或者**纯虚析构**
+
+虚析构和纯虚析构共性：
+
+- 可以解决父类指针释放子类对象
+- 都需要有具体的函数实现
+
+虚析构和纯虚析构区别：
+
+- 如果是纯虚析构，该类属于抽象类，无法实例化对象
+
+**注意事项：**
+
+1、虚析构或纯虚析构主要用来解决**通过父类指针释放子类对象**
+2、如果子类中没有堆区数据，可以不写为虚析构或纯虚析构
+3、拥有纯虚析构函数的类也属于抽象类
+
+e.g.(虚析构)
+
+```C++
+class Animal {
+public:
+	Animal() {
+		cout << "Animal构造函数调用" << endl;
+	}
+	virtual ~Animal() {
+		cout << "Animal析构函数调用" << endl;
+	}
+	virtual void speak() = 0;
+};
+
+class Cat :public Animal {
+public:
+	Cat(string n) {
+		cout << "Cat构造函数调用" << endl;
+		name = new string(n);
+	}
+	~Cat() {
+		if (name != NULL) {
+			cout << "Cat析构函数调用" << endl;
+			delete name;
+			name = NULL;
+		}
+	}
+	virtual void speak() {
+		cout << *name << "小猫在说话" << endl;
+	}
+	string* name;
+};
+
+void test01() {
+	Animal* animal = new Cat("Tom");//父类指针指向子类对象
+	animal->speak();
+	delete animal;//父类指针析构时不会调用子类的析构函数，导致子类会出现内存泄漏。解决方法->将父类的析构函数改为虚析构
+}
+```
+
+e.g.(纯虚析构)
+
+```C++
+class Animal {
+public:
+	Animal() {
+		cout << "Animal构造函数调用" << endl;
+	}
+	virtual ~Animal() = 0;
+	virtual void speak() = 0;
+};
+Animal::~Animal() {
+	cout << "Animal的纯虚析构函数" << endl;
+}
+```
+
+#### 4.7.5 多态实现组装电脑实例
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+class CPU {//CPU抽象类
+public:
+	virtual void caculate() = 0;
+};
+
+class GPU {//GPU抽象类
+public:
+	virtual void display() = 0;
+};
+
+class Memory {//Memory抽象类
+public:
+	virtual void storage() = 0;
+};
+
+class Computer {
+public:
+	Computer(CPU* c, GPU* g, Memory* m) {
+		cpu = c;
+		gpu = g;
+		memory = m;
+	}
+
+	void work() {
+		cpu->caculate();
+		gpu->display();
+		memory->storage();
+	}
+	~Computer() {
+		if (cpu != NULL) {
+			delete cpu;
+			cpu = NULL;
+		}		
+		if (gpu != NULL) {
+			delete gpu;
+			gpu = NULL;
+		}		
+		if (memory != NULL) {
+			delete memory;
+			memory = NULL;
+		}
+	}
+private:
+	CPU* cpu;
+	GPU* gpu;
+	Memory* memory;
+};
+
+class IntelCPU :public CPU {
+public:
+	virtual void caculate() {
+		cout << "Intel的CPU工作" << endl;
+	}
+};
+
+class IntelGPU :public GPU {
+public:
+	virtual void display() {
+		cout << "Intel的GPU显示" << endl;
+	}
+};
+
+class IntelMemory :public Memory {
+public:
+	virtual void storage() {
+		cout << "Intel的内存条存储" << endl;
+	}
+};
+
+class LenovoCPU :public CPU {
+public:
+	virtual void caculate() {
+		cout << "Lenovo的CPU工作" << endl;
+	}
+};
+
+class LenovoGPU :public GPU {
+public:
+	virtual void display() {
+		cout << "Lenovo的GPU显示" << endl;
+	}
+};
+
+class LenovoMemory :public Memory {
+public:
+	virtual void storage() {
+		cout << "Lenovo的内存条存储" << endl;
+	}
+};
+
+void test01() {
+	CPU* intelCpu = new IntelCPU;
+	GPU* intelGpu = new IntelGPU;
+	Memory* intelMemory = new IntelMemory;
+	//组装地一台电脑
+	cout << "第一台电脑开始工作！" << endl;
+	Computer* computer1 = new Computer(intelCpu, intelGpu, intelMemory);
+	computer1->work();
+	delete computer1;	
+	cout << "---------------" << endl;
+	cout << "第二台电脑开始工作！" << endl;
+	Computer* computer2 = new Computer(new LenovoCPU, new LenovoGPU, new LenovoMemory);
+	computer2->work();
+	delete computer2;
+	cout << "---------------" << endl;
+	cout << "第三台电脑开始工作！" << endl;
+	Computer* computer3 = new Computer(new IntelCPU, new LenovoGPU, new IntelMemory);
+	computer3->work();
+	delete computer3;
+}
+```
+
+
+
+## 5、文件操作
+
+文件类型包括：文本文件（以文本的ASCII码存储）和二进制文件（以文本的二进制形式存储）
+
+头文件：`#include <fstream>`
+
+操作文件的三种类型：(1)ofstream 写操作  (2) ifstream 读操作  (3)fstream 读写操作
+
+### 5.1 文本文件
+
+#### 5.1.1 写文件
+
+**注意事项：**
+1、操作完毕，要关闭文件；
+2、使用ofstream或fstream创建流对象均可，但在写操作时，fstream(path,mode)的mode必须指定ios::out，而ofstream可以省略。
+
+方法一：
+
+```C++
+ofstream ofs;//创建流对象
+ofs.open("path",ios::out);
+ofs<<"sth"<<endl;//写入一行
+ofs.close();
+```
+
+方法二：
+
+```C++
+ofstream ofs("path");//ofstream省略Mode时默认为ios::out
+ofs<<"sth"<<endl;//写入一行
+ofs.close();
+```
+
+
+
+#### 5.1.2 读文件
+
+全局函数，在头文件#include<string>中,函数声明为：
+
+`ifstream& getline ( istream& is, string& str, char delim)`
+
+`ifstream& getline ( istream& is, string& str )`
+
+ifstream的成员函数，函数声明为：
+
+`ifstream& getline (char* s, streamsize n)`
+
+`ifstream& getline (char* s, streamsize n, char delim) `
+
+**注意事项：**
+1、delim为每次读的结束符，默认为"\n"，可以按要求修改；
+2、fstream也可以进行读操作，但要指定mode为ios::in。
+
+读文件的四种方式：
+
+方法一：
+
+```C++
+char buf[1024]={0};
+while(ifs>>buf){
+    cout<<buf<<endl;
+}
+```
+
+方法二：
+
+```C++
+char buf[1024]={0};
+while(ifs.getline(buf,sizeof(buf),"\n")){//readline的第三个参数如果省略则默认为"\n"，可以按要求指定
+	cout<<buf<<endl;
+}
+```
+
+方法三：
+
+```C++
+string buf;
+while(getline(ifs,buf,"\n")){
+    cout<<buf<<endl;
+}
+```
+
+方法四（效率较低）:
+
+```C++
+char c;
+while((c = ifs.get()!=EOF){//EOF=end of file
+	cout<<c;
+}
+```
+
+
+
+### 5.2 二进制文件
+
+以二进制的方式对文件进行读写操作，打开方式指定为ios::binary
+
+#### 5.2.1 写文件
+
+二进制方式写文件主要利用流对象调用成员函数write
+
+函数原型 ：`ofstream& write(const char * buffer,int len);` 字符指针buffer指向内存中一段存储空间。len是读写的字节数。
+
+**注意事项：**
+1、如果需要一个对象，则buffer位置应该读入对象的地址，再强制类型转换，如下所示。
+
+e.g.
+
+```C++
+class Person {
+public:
+	Person() {}
+	Person(const char* name, int age) {
+		this->age = age;
+		strcpy_s(this->name, name);
+	}
+	const char* get_name() {
+		return this->name;
+	}
+	int get_age() {
+		return this->age;
+	}
+private:
+	char name[64];
+	int age;
+};
+
+void test01(){
+    ofstream ofs("person.txt", ios::out | ios::binary);
+    Person p("张三", 18);
+    ofs.write((const char*)&p,sizeof(p));
+    ofs.close();
+}
+```
+
+
+
+#### 5.2.2 读文件
+
+二进制方式读文件主要利用流对象调用成员函数read
+
+函数原型：`istream& read(char *buffer,int len);` 字符指针buffer指向内存中一段存储空间。len是读写的字节数。
+
+e.g.
+
+```C++
+void test02(){	
+	ifstream ifs("./person.txt", ios::in | ios::binary);
+	if (!ifs) {
+		cout << "文件打开失败！" << endl;
+		return;
+	}
+	Person p1;
+	ifs.read((char*)&p1, sizeof(p1));
+	cout << "姓名：" << p1.get_name() << " 年龄：" << p1.get_age() << endl;
+	ifs.close();
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1173,3 +1584,4 @@ int main(){
 
 
 ---
+
