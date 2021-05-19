@@ -1,5 +1,7 @@
 #include "System.h"
 #include <iostream>
+
+using namespace std;
 //此项目主要有三个功能模块：开通管理员账户、管理员功能界面(管理员身份登录)、本科生功能界面(本科生省份登录)。
 //第一次运行本项目时，首先要开通管理员账户才能进行其他的操作。在登录学生账户之前首先要登进管理员系统创建学生信息之后才可以使用该账户登录学生界面。
 
@@ -14,8 +16,8 @@
 //(2)修改密码
 
 int main() {
-
-
+	System s;
+	s.load_interface();
 	system("pause");
 	return 0;
 }

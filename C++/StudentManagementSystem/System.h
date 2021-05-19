@@ -22,12 +22,12 @@ public:
 	void load_undst();						//读取本科生数据
 	void load_ad();							//读取管理员数据
 	/*管理员功能*/
-	void input_underst_info();				//录入本科生信息
-	void look_all_underst();				//查看所有本科生信息
-	void look_all_underst_by_grade();		//按照成绩排序查看所有学生信息 
-	void look_underst_by_name(string name);			//根据姓名查看本科生信息
-	void look_underst_by_id(string id);				//根据ID查看本科生信息
-	void delete_underst_by_id(string id);			//根据ID删除本科生信息
+	void input_underst_info();				//(1)录入本科生信息
+	void look_all_underst();				//(2)查看所有本科生信息
+	void look_all_underst_by_grade();		//(3)按照成绩排序查看所有学生信息 
+	void look_underst_by_name(string name);	//(4)根据姓名查看本科生信息
+	void look_underst_by_id(string id);		//(5)根据ID查看本科生信息
+	void delete_underst_by_id(string id);	//(6)根据ID删除本科生信息
 	/*本科生功能*/
 	void change_password(string id);
 };
