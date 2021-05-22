@@ -1397,11 +1397,11 @@ ofs.close();
 
 #### 5.1.2 读文件
 
-全局函数，在头文件#include<string>中,函数声明为：
+全局函数，函数声明为：
 
 `ifstream& getline ( istream& is, string& str, char delim)`
 
-`ifstream& getline ( istream& is, string& str )`
+`ifstream& getline ( istream& is, string& str)`
 
 ifstream的成员函数，函数声明为：
 
@@ -1412,6 +1412,7 @@ ifstream的成员函数，函数声明为：
 **注意事项：**
 1、delim为每次读的结束符，默认为"\n"，可以按要求修改；
 2、fstream也可以进行读操作，但要指定mode为ios::in。
+3、全局函数要求buf为string类型，成员函数要求buf为const char*类
 
 读文件的四种方式：
 
