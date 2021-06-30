@@ -1,8 +1,0 @@
-#ignore some files
-.idea
-/__pycache__/
-*/__pycache__/
-/samples/
-/Lab/
-/output/*/
-/fixed_data/
